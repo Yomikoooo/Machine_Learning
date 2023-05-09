@@ -5,4 +5,5 @@ Furthermore, I also upload some paper and the interpretation.
 
 ref:
 > hyLee/ML2023/NTU
+> dive into deep learning
 
