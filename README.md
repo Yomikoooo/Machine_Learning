@@ -2,8 +2,18 @@
 This is a repo of my machine learning study.
 It includes code and notes and homework.
 
+- [Machine Learning](#machine-learning)
+  - [My Learning Process:](#my-learning-process)
+    - [Programming:](#programming)
+    - [Books:](#books)
+    - [Math foundation:](#math-foundation)
+    - [OpenCourses:](#opencourses)
+    - [Projects in kaggle:](#projects-in-kaggle)
+    - [Papers:](#papers)
+  - [Table of Contents](#table-of-contents)
 
-##My Learning Process:
+
+## My Learning Process:
 python libraries(pytorch, numpy, pandas, matplotlib) $\rightarrow$ opencourse(lec and hw and proj) $\rightarrow$ books(including math) $\rightarrow$ projects(find in github or kaggle) $\rightarrow$ papers(top conf and research group)
 
 ### Programming:
@@ -23,7 +33,7 @@ python libraries(pytorch, numpy, pandas, matplotlib) $\rightarrow$ opencourse(le
 | Deep Learning |Ian Goodfellow|
 | Machine Learning: A Probabilistic Perspective | Kevin P. Murphy |
 
-### math foundation:
+### Math foundation:
 | Field | book name | author | opencourse |
 | :--: | :--: | :--: | :--: |
 | Linear Algebra | Linear Algebra | Gilbert Strang | [MIT 18.06](http://web.mit.edu/18.06/www/) |
