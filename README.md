@@ -1,6 +1,7 @@
 # Machine Learning
 This is a repo of my machine learning study.
-It includes code and notes and homework.
+It includes path and code and notes and homework.
+update everyday as possible as I can.
 
 - [Machine Learning](#machine-learning)
   - [My Learning Process:](#my-learning-process)
@@ -15,6 +16,15 @@ It includes code and notes and homework.
 
 ## My Learning Process:
 python libraries(pytorch, numpy, pandas, matplotlib) $\rightarrow$ opencourse(lec and hw and proj) $\rightarrow$ books(including math) $\rightarrow$ projects(find in github or kaggle) $\rightarrow$ papers(top conf and research group)
+
+**Detailed**: assuming math preliminary is equipped(at least calculus, linear algebra, probability theory and some mathematical statistics basics, if not sure how many to learn, go to book `PRML`), some crash tutorial of `python libraries`(official tutorial is enough), then go to `CS229(or NTU ML2023)` for machine learning basics, after that go to `CS231n` for deep learning basics and computer vision, then go to `CS224n` for natural language processing basics. 
+If research, read papers in `top conferences` and `research groups`.
+If find jobs, go to `kaggle` to do some projects.
+
+TOP conf: ICML, NIPS, ICLR, CVPR, ICCV, etc. 
+Research groups: Google Research, Google Brain, Deepmind, Meta AI, Tencent AI Lab, etc.
+Mu Li is has his youtube channel to lead me to read important papers.
+If not enough, RSS feed is useful.
 
 ### Programming:
 | Name | tutorials | docs |
@@ -48,12 +58,12 @@ python libraries(pytorch, numpy, pandas, matplotlib) $\rightarrow$ opencourse(le
 | Image Processing | Digital Image Processing | Rafael C. Gonzalez, Richard E. Woods, Steven L. Eddins | 
 
 ### OpenCourses:
-| Name | Author | Field | Code | Note |
-| :--: | :--: | :--: | :--: | :--: |
-|  [Machine Learning](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php) | Hung-Yi Lee| DL
-| [CS229](http://cs229.stanford.edu/) | Andrew Ng | ML
-| [CS231n](http://cs231n.stanford.edu/) | Fei-Fei Li, Andrej Karpathy, Justin Johnson | CV
-| [CS224n](http://web.stanford.edu/class/cs224n/) | Christopher Manning, Richard Socher | NLP
+| Name | Video|Author | Field | Code | Note |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+|  [Machine Learning](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php) | Youtube(videos in hp) |Hung-Yi Lee| DL
+| [CS229](http://cs229.stanford.edu/) | [bilibili](https://www.bilibili.com/video/BV1JE411w7Ub) |Andrew Ng | ML
+| [CS231n](http://cs231n.stanford.edu/) | bilibili |Fei-Fei Li, Andrej Karpathy, Justin Johnson | CV
+| [CS224n](http://web.stanford.edu/class/cs224n/) | bilibili |Christopher Manning, Richard Socher | NLP
 
 ### Projects in kaggle:
 | Name | Author | Field | Code | Note |
