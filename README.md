@@ -16,8 +16,14 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [Intro:](#intro)
     - [0.1. Data processing:](#01-data-processing)
     - [0.2. Model:](#02-model)
-    - [0.3. Loss function:](#03-loss-function)
+    - [0.3. Loss function](#03-loss-function)
+      - [0.3.1. MLE](#031-mle)
+      - [0.3.2. MAE](#032-mae)
+      - [0.3.3. Cross Entropy](#033-cross-entropy)
     - [0.4. Optimization algorithm:](#04-optimization-algorithm)
+      - [0.4.1. Gradient Descent](#041-gradient-descent)
+      - [0.4.2. Newton's Method](#042-newtons-method)
+    - [0.5. Data Loader](#05-data-loader)
   - [1. Training](#1-training)
     - [1.1. Overfitting and Underfitting](#11-overfitting-and-underfitting)
     - [1.2. Regularization](#12-regularization)
@@ -38,7 +44,10 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [2.4. Adam](#24-adam)
     - [2.5. RMSProp](#25-rmsprop)
   - [3. Linear Regression](#3-linear-regression)
-  - [4. Logistic Regression](#4-logistic-regression)
+  - [4. Classification](#4-classification)
+    - [4.1. Logistic Regression](#41-logistic-regression)
+    - [4.2. Perceptron learning aigorithm](#42-perceptron-learning-aigorithm)
+    - [4.3 Exponential Family](#43-exponential-family)
 
 
 ## My Learning Process:
@@ -85,12 +94,12 @@ If not enough, RSS feed is useful.
 | Image Processing | Digital Image Processing | Rafael C. Gonzalez, Richard E. Woods, Steven L. Eddins | 
 
 ### OpenCourses:
-| Name | Video|Author | Field | Code | Note |
+| Name | repo |Author | Field | Code | Note |
 | :--: | :--: | :--: | :--: | :--: | :--: |
-|  [Machine Learning](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php) | Youtube(videos in homepage) |Hung-Yi Lee| DL
-| [CS229](http://cs229.stanford.edu/) | [bilibili](https://www.bilibili.com/video/BV1JE411w7Ub) |Andrew Ng | ML
-| [CS231n](http://cs231n.stanford.edu/) | bilibili |Fei-Fei Li, Andrej Karpathy, Justin Johnson | CV
-| [CS224n](http://web.stanford.edu/class/cs224n/) | bilibili |Christopher Manning, Richard Socher | NLP
+|  [Machine Learning](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php) |  |Hung-Yi Lee| DL
+| [CS229](http://cs229.stanford.edu/) | [repo](https://github.com/Yomikoooo/cs229-autumn-2018) |Andrew Ng | ML |
+| [CS231n](http://cs231n.stanford.edu/) |  |Fei-Fei Li | CV
+| [CS224n](http://web.stanford.edu/class/cs224n/) |  |Christopher Manning| NLP
 
 ### Projects in kaggle:
 | Name |  Task | Code | Note |
@@ -296,15 +305,28 @@ class NeuralNetwork(nn.Module):
 ```
 
 
-### 0.3. Loss function:
+### 0.3. Loss function
 is used to measure the difference between the predicted value and the real value.
 
 some common loss functions: MAE, MSE, Cross Entropy, etc.
 
+#### 0.3.1. MLE
 **MSE:**
 $$J(\theta) = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2$$
 probablistic interpretation: It can be derived from the **maximum likelihood estimation (MLE)** of the Gaussian distribution. 
 linear algebra interpretation: It can be derived from the **least square estimation (LSE)** of the linear system.
+
+#### 0.3.2. MAE
+**MAE:**
+$$J(\theta) = \frac{1}{m}\sum_{i=1}^m|h_\theta(x^{(i)})-y^{(i)}|$$
+probablistic interpretation: It can be derived from the **maximum likelihood estimation (MLE)** of the Laplace distribution.
+
+#### 0.3.3. Cross Entropy
+**Cross Entropy:**
+$$J(\theta) = -\frac{1}{m}\sum_{i=1}^m\sum_{k=1}^Ky_k^{(i)}log(h_\theta(x^{(i)}))_k$$
+where $y_k^{(i)}$ is the one-hot encoding of the real label, $h_\theta(x^{(i)})_k$ is the predicted probability of the $k$-th class.
+cross entropy is derived from the **maximum likelihood estimation (MLE)** of the multinomial distribution.
+
 ```python
 #example: MSE, Cross Entropy, L1, L2
 # criterion = nn.MSELoss()
@@ -314,18 +336,17 @@ criterion = nn.CrossEntropyLoss()
 loss = criterion(y_pred, y)
 ```
 
-**Cross Entropy:**
-$$J(\theta) = -\frac{1}{m}\sum_{i=1}^m\sum_{k=1}^Ky_k^{(i)}log(h_\theta(x^{(i)}))_k$$
-where $y_k^{(i)}$ is the one-hot encoding of the real label, $h_\theta(x^{(i)})_k$ is the predicted probability of the $k$-th class.
-
 ### 0.4. Optimization algorithm:
 to find the real parameters, we need to minimize the loss function
 
-some common optimization algorithms: **Gradient Descent(SGD)**, Adam, Adagrad, etc.
+some common optimization algorithms: **Gradient Descent(SGD)**, Newton's Method, Adam, Adagrad, etc.
 
+#### 0.4.1. Gradient Descent
 **Gradient Descent** is a first-order iterative optimization algorithm for finding the minimum of a function. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or approximate gradient) of the function at the current point.
 $$\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta)$$
 where $\alpha$ is the learning rate., $\frac{\partial}{\partial\theta_j}J(\theta)$ is the partial derivative of the loss function with respect to $\theta_j$.
+
+GD equals **minimizing** the **negative** log likelihood function in MLE if we set the likelihood function as loss function.
 
 the problem of GD is that it is very slow when the number of features is large. So we need to use **feature scaling** to speed up the training process.
 $$x_j := \frac{x_j-\mu_j}{s_j}$$
@@ -338,8 +359,10 @@ in gradient landscape, local minimum is not guaranteed. So we need to use **mult
 
 **momentum** is a variant of GD. it uses the previous gradients to update the parameters. it is faster than GD and more stable than SGD and mini-batch GD.
 
-**Locally Weighted Linear Regression**
-$$J(\theta) = \frac{1}{2m}\sum_{i=1}^mw^{(i)}(h_\theta(x^{(i)})-y^{(i)})^2$$
+#### 0.4.2. Newton's Method
+**Newton's Method** is a second-order iterative optimization algorithm for finding the minimum of a function. It is faster than GD but it is not stable. especially when the number of features is large, it is very slow because it needs to calculate the inverse of the Hessian matrix.
+$$\theta := \theta - H^{-1}\nabla_\theta J(\theta)$$
+where $H$ is the Hessian matrix of the loss function with respect to $\theta$.
 
 **learning rate**: the step size of the gradient descent.
 **momentum**: the weight of the previous gradient.
@@ -369,6 +392,7 @@ config = {
 
 }
 ```
+### 0.5. Data Loader
 
 before training, we need to create a **data loader** to load the data.
 ```python
@@ -487,9 +511,27 @@ The hypothesis is a linear function of the input features $\hat x$. the paramete
 $$\theta = (X^TX)^{-1}X^Ty$$
 derivation: $\nabla_\theta J(\theta) = X^TX\theta - X^Ty = 0$
 
-## 4. Logistic Regression
+**Locally Weighted Linear Regression**
+$$J(\theta) = \frac{1}{2m}\sum_{i=1}^mw^{(i)}(h_\theta(x^{(i)})-y^{(i)})^2$$
+## 4. Classification
+### 4.1. Logistic Regression
+**Description**: Logistic Regression is a linear classifier. it is used to classify data into two classes. it is a binary classifier. it can only classify linearly separable data.
+
 **Cases**: Email Spam Detection, Credit Card Fraud Detection, etc.
 **Model: Sigmoid Function**
 $$h_\theta(x) = \frac{1}{1+e^{-\theta^Tx}}$$
 **Loss Function: Cross Entropy**
 **Optimization: Gradient Descent**
+
+### 4.2. Perceptron learning aigorithm
+this is the simplest neural network. it is a linear classifier. it can only classify linearly separable data.
+
+**Model: Perceptron**
+$$h_\theta(x) = \begin{cases}1 & \text{if } \theta^Tx \geq 0\\0 & \text{otherwise}\end{cases}$$
+**Loss Function: 0-1 Loss**
+$$L(\theta) = \sum_{i=1}^m\mathbb{1}\{y^{(i)}\neq h_\theta(x^{(i)})\}$$
+**Optimization: Gradient Descent**
+
+### 4.3 Exponential Family
+**Model: Exponential Family**
+$$p(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$
