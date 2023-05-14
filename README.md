@@ -528,6 +528,7 @@ this is the simplest neural network. it is a linear classifier. it can only clas
 
 **Model: Perceptron**
 $$h_\theta(x) = \begin{cases}1 & \text{if } \theta^Tx \geq 0\\0 & \text{otherwise}\end{cases}$$
+
 **Loss Function: 0-1 Loss**
 $$L(\theta) = \sum_{i=1}^m\mathbb{1}\{y^{(i)}\neq h_\theta(x^{(i)})\}$$
 **Optimization: Gradient Descent**
