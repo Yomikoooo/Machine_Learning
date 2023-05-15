@@ -24,7 +24,7 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
       - [0.4.1. Gradient Descent](#041-gradient-descent)
       - [0.4.2. Newton's Method](#042-newtons-method)
     - [0.5. Data Loader](#05-data-loader)
-  - [1. Training](#1-training)
+  - [1. Training and Fitting](#1-training-and-fitting)
     - [1.1. Overfitting and Underfitting](#11-overfitting-and-underfitting)
     - [1.2. Regularization](#12-regularization)
       - [1.2.1. L1 Regularization](#121-l1-regularization)
@@ -47,7 +47,14 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
   - [4. Classification](#4-classification)
     - [4.1. Logistic Regression](#41-logistic-regression)
     - [4.2. Perceptron learning aigorithm](#42-perceptron-learning-aigorithm)
-    - [4.3 Exponential Family](#43-exponential-family)
+  - [5. Generalized Linear Model](#5-generalized-linear-model)
+    - [5.1 Exponential Family](#51-exponential-family)
+    - [5.2. Generalized Linear Model](#52-generalized-linear-model)
+    - [5.3 Softmax Regression](#53-softmax-regression)
+  - [6. Generative learning algorithms](#6-generative-learning-algorithms)
+    - [6.1. Generative vs. Discriminative](#61-generative-vs-discriminative)
+    - [Gaussian Discriminant Analysis](#gaussian-discriminant-analysis)
+    - [6.2. Naive Bayes](#62-naive-bayes)
 
 
 ## My Learning Process:
@@ -74,7 +81,7 @@ If not enough, RSS feed is useful.
 ### Books:
 | Name | Author | Code | Note |
 | :--: | :--: | :--: | :--: |
-| Statistical Learning Method |Hang Li|[code](https://github.com/SleepyBag/Statistical-Learning-Methods) | |
+| Statistical Learning Method |Hang Li|[repo1](https://github.com/SleepyBag/Statistical-Learning-Methods),[repo2](https://github.com/fengdu78/lihang-code) | |
 | Pattern Recognition and Machine Learning | Christopher M. Bishop | 
 | Deep Learning |Ian Goodfellow|
 | Machine Learning: A Probabilistic Perspective | Kevin P. Murphy |
@@ -478,8 +485,10 @@ def save_prediction(model, test_loader):
     files.download('prediction.csv')
     files.download('best_model.pth')
 ```
-## 1. Training 
+## 1. Training and Fitting
 ### 1.1. Overfitting and Underfitting
+overfitting: the model performs well on the training data but performs poorly on the test data.
+underfitting: the model performs poorly on both the training data and the test data.
 ### 1.2. Regularization
 #### 1.2.1. L1 Regularization
 #### 1.2.2. L2 Regularization
@@ -533,6 +542,95 @@ $$h_\theta(x) = \begin{cases}1 & \text{if } \theta^Tx \geq 0\\0 & \text{otherwis
 $$L(\theta) = \sum_{i=1}^m\mathbb{1}\{y^{(i)}\neq h_\theta(x^{(i)})\}$$
 **Optimization: Gradient Descent**
 
-### 4.3 Exponential Family
+## 5. Generalized Linear Model
+special cases: Linear Regression, Logistic Regression, Perceptron, etc. broader family of models called Generalized Linear Model(**GLMs**).
+### 5.1 Exponential Family
+**Description**: Exponential Family is a family of probability distributions. it includes many common distributions, such as Gaussian distribution, Bernoulli distribution, Poisson distribution, etc. in GLMs, the output distribution is a member of the exponential family.
 **Model: Exponential Family**
 $$p(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$
+where $\eta$ is the natural parameter, $T(y)$ is the sufficient statistic, $a(\eta)$ is the log partition function, $b(y)$ is the base measure.
+
+example: Bernoulli distribution
+$$p(y;\phi) = \phi^y(1-\phi)^{1-y}$$
+where $\phi$ is the probability of success, $y\in\{0,1\}$.
+parameter: $\eta = log\frac{\phi}{1-\phi}$, $T(y) = y$, $a(\eta) = log(1+e^\eta)$, $b(y) = 1$.
+example: Gaussian distribution
+$$p(y;\mu) = \frac{1}{\sqrt{2\pi\sigma^2}}exp(-\frac{(y-\mu)^2}{2\sigma^2})$$
+where $\mu$ is the mean, $\sigma^2$ is the variance.
+parameter: $\eta = \frac{\mu}{\sigma^2}$, $T(y) = y$, $a(\eta) = \frac{\eta^2}{2}$, $b(y) = \frac{1}{\sqrt{2\pi}}$.
+
+exponential family has many nice properties. for example, the mean and variance of exponential family can be expressed as a function of the natural parameter $\eta$ and its derivatives while some other distributions can not or integral is required. 
+$$E[T(y)] = \frac{\partial a(\eta)}{\partial\eta}$$
+$$Var[T(y)] = \frac{\partial^2 a(\eta)}{\partial\eta^2}$$
+
+### 5.2. Generalized Linear Model
+**Description**: GLM and exponential family are closely related. We just need to estiamte the natural parameter $\eta$ of the exponential family. the natural parameter $\eta=\theta^Tx$ is a linear function of the input features $x$.
+our goal is to predict the expected value of $T(y)$, which is the mean of the output distribution.
+
+### 5.3 Softmax Regression
+**Description**: Softmax Regression is a generalization of Logistic Regression. it is a multi-class classifier. it can only classify linearly separable data.
+
+|Distribution|$\eta$| $T(y)$| $a(\eta)$| $b(y)$|
+|---|---|---|---|---|
+|Bernoulli|$\theta^Tx$|$y$|$log(1+e^\eta)$|1|
+|Gaussian|$\theta^Tx$|$y$|$\frac{\eta^2}{2}$|$\frac{1}{\sqrt{2\pi}}$|
+|Multinoulli|$\theta^Tx$|$1\{y^{(i)}=k\}$|$log(\sum_{k=1}^Ke^{\eta_k})$|1|
+|Poisson|$\theta^Tx$|$y$|$e^\eta$|$e^{-y}$|
+
+
+**Model: Softmax Function**
+$$h_\theta(x) = \frac{e^{\theta_j^Tx}}{\sum_{i=1}^ke^{\theta_i^Tx}}$$
+**Loss Function: Cross Entropy**
+**Optimization: Gradient Descent**
+
+## 6. Generative learning algorithms
+### 6.1. Generative vs. Discriminative
+Bayes' rule
+$$p(y|x) = \frac{p(x|y)p(y)}{p(x)}$$
+
+|   |Generative model|Discriminative model|
+|---|---|---|
+|Goal | Directly estimate $p(y\|x)$ | estimate $p(y\|x)$ to then deduce $p(x|y)$ |
+|what to learn| $p(x\|y)$ and $p(y)$| $p(y\|x)$ or $h_\theta(x)$|
+|example| Naive Bayes, LDA, GDA| Logistic Regression, SVM, Neural Network|
+
+### Gaussian Discriminant Analysis
+**Description**: Gaussian Discriminant Analysis is a generative learning algorithm. in GDA, the output distribution is Gaussian distribution. it is a binary classifier.
+
+Gaussian and logistic regression is closely related. if the covariance matrix $\Sigma$ is diagonal, then GDA is equivalent to logistic regression.
+
+**Multivariate Gaussian Distribution**
+$$p(x;\mu,\Sigma) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}exp(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))$$
+where $\mu$ is the mean vector, $\Sigma$ is the covariance matrix.
+$Cov[Z] = E[(Z-E[Z])(Z-E[Z])^T] = E[ZZ^T] - E[Z]E[Z]^T = E[ZZ^T] - \mu\mu^T$
+If $Z\sim N(\mu,\Sigma)$, then $E[Z] = \mu$, $Cov[Z] = \Sigma$.
+
+**Model: Gaussian Discriminant Analysis**
+$$p(y) = Bernoulli(\phi)$$
+$$p(x\|y=0) = N(\mu_0,\Sigma)$$
+$$p(x\|y=1) = N(\mu_1,\Sigma)$$
+**Loss Function: Maximum Likelihood Estimation**
+log likelihood function
+$$l(\phi,\mu_0,\mu_1,\Sigma) = log\prod_{i=1}^mp(x^{(i)},y^{(i)};\phi,\mu_0,\mu_1,\Sigma)$$
+argmax: $\phi,\mu_0,\mu_1,\Sigma$
+$$\phi = \frac{1}{m}\sum_{i=1}^m1\{y^{(i)}=1\}$$
+$$\mu_0 = \frac{\sum_{i=1}^m1\{y^{(i)}=0\}x^{(i)}}{\sum_{i=1}^m1\{y^{(i)}=0\}}$$
+$$\mu_1 = \frac{\sum_{i=1}^m1\{y^{(i)}=1\}x^{(i)}}{\sum_{i=1}^m1\{y^{(i)}=1\}}$$
+$$\Sigma = \frac{1}{m}\sum_{i=1}^m(x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T$$
+**Optimization: Gradient Descent**
+
+### 6.2. Naive Bayes
+**Description**: Our motivating examples is spam detection and text classification. we can use Naive Bayes to solve this problem. 
+In NB, the core assumption is that the features are conditionally independent given the class label but it is impossible in reality. however, NB still works well in practice.
+The model uses the prior probability $p(y)$ of given class and the conditional probability $p(x|y)$ of given class to predict the output distribution $p(y|x)$ and classify.
+
+**Model: Naive Bayes**
+$$P(x\|y) = \prod_{j=1}^np(x_j\|y)$$
+Solutions: $$p(y) = \frac{\sum_{i=1}^m1\{y^{(i)}=1\}}{m}$$
+and $$p(x_j\|y=0) = \frac{\sum_{i=1}^m1\{x_j^{(i)}=1,y^{(i)}=0\}}{\sum_{i=1}^m1\{y^{(i)}=0\}}$$
+
+**Loss Function: Maximum Likelihood Estimation**
+**Optimization: Gradient Descent**
+
+
+
