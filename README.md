@@ -12,6 +12,7 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [Projects in kaggle:](#projects-in-kaggle)
     - [Papers:](#papers)
 - [Notes](#notes)
+  - [online notes](#online-notes)
   - [0. Basics](#0-basics)
     - [Intro:](#intro)
     - [0.1. Data processing:](#01-data-processing)
@@ -53,8 +54,14 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [5.3 Softmax Regression](#53-softmax-regression)
   - [6. Generative learning algorithms](#6-generative-learning-algorithms)
     - [6.1. Generative vs. Discriminative](#61-generative-vs-discriminative)
-    - [Gaussian Discriminant Analysis](#gaussian-discriminant-analysis)
-    - [6.2. Naive Bayes](#62-naive-bayes)
+    - [6.2 Gaussian Discriminant Analysis](#62-gaussian-discriminant-analysis)
+    - [6.3. Naive Bayes](#63-naive-bayes)
+  - [7. Support Vector Machine](#7-support-vector-machine)
+    - [7.1 Margin](#71-margin)
+    - [7.2 Lagrange Duality](#72-lagrange-duality)
+    - [7.3 KKT Conditions](#73-kkt-conditions)
+    - [7.4 SVM Optimization steps](#74-svm-optimization-steps)
+    - [7.5 Kernel Methods](#75-kernel-methods)
 
 
 ## My Learning Process:
@@ -93,7 +100,7 @@ If not enough, RSS feed is useful.
 | Calculus | Thomas' Calculus | George B. Thomas, Maurice D. Weir, Joel Hass, Frank R. Giordano | [MIT 18.01](https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/pages/syllabus/)</br>[MIT 18.02](https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/) |
 | Differential Equations | Elementary Differential Equations and Boundary Value Problems | William E. Boyce, Richard C. DiPrima | [MIT 18.03](https://ocw.mit.edu/courses/mathematics/18-03sc-differential-equations-fall-2011/) |
 | Probability Theory | Introduction to Probability | Dimitri P. Bertsekas, John N. Tsitsiklis | [MIT 6.041](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/)
-| Statistics | Introduction to Mathematical Statistics | Robert V. Hogg, Joseph W. McKean, Allen T. Craig | [MIT 18.650](https://ocw.mit.edu/courses/mathematics/18-650-statistics-for-applications-fall-2016/) |
+| Statistics | All of Statistics | Larry Wasserman | [CMU 36-705](http://www.stat.cmu.edu/~larry/=stat705/) |
 | Optimization | Convex Optimization | Stephen Boyd, Lieven Vandenberghe | [Stanford EE364a](https://stanford.edu/class/ee364a/)|
 | Information Theory | Elements of Information Theory | Thomas M. Cover, Joy A. Thomas | [MIT 6.441](https://ocw.mit.edu/courses/6-441-information-theory-spring-2016/pages/syllabus/) |
 | Numerical Analysis | Numerical Analysis | Richard L. Burden, J. Douglas Faires | [MIT 18.330](https://ocw.mit.edu/courses/mathematics/18-330-introduction-to-numerical-analysis-spring-2012/) |
@@ -120,6 +127,17 @@ If not enough, RSS feed is useful.
 
 
 # Notes
+## online notes
+|Chapter|Link|Task
+|:--|:--|:--|
+|0. Basics
+|1. Linear Regression
+|2. Logistic Regression
+|3. Generalized Linear Models
+|4. Gaussian Discriminant Analysis
+|5. Naive Bayes
+|6. Support Vector Machines|[Zhihu(Chinese)](https://zhuanlan.zhihu.com/p/77750026)|classification
+|7. Kernel Methods
 ## 0. Basics
 
 ### Intro:
@@ -594,7 +612,7 @@ $$p(y|x) = \frac{p(x|y)p(y)}{p(x)}$$
 |what to learn| $p(x\|y)$ and $p(y)$| $p(y\|x)$ or $h_\theta(x)$|
 |example| Naive Bayes, LDA, GDA| Logistic Regression, SVM, Neural Network|
 
-### Gaussian Discriminant Analysis
+### 6.2 Gaussian Discriminant Analysis
 **Description**: Gaussian Discriminant Analysis is a generative learning algorithm. in GDA, the output distribution is Gaussian distribution. it is a binary classifier.
 
 Gaussian and logistic regression is closely related. if the covariance matrix $\Sigma$ is diagonal, then GDA is equivalent to logistic regression.
@@ -619,7 +637,9 @@ $$\mu_1 = \frac{\sum_{i=1}^m1\{y^{(i)}=1\}x^{(i)}}{\sum_{i=1}^m1\{y^{(i)}=1\}}$$
 $$\Sigma = \frac{1}{m}\sum_{i=1}^m(x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T$$
 **Optimization: Gradient Descent**
 
-### 6.2. Naive Bayes
+**Advantages**: GDA just computes the mean and covariance matrix of the input features. it is easy to implement and works well in practice.
+
+### 6.3. Naive Bayes
 **Description**: Our motivating examples is spam detection and text classification. we can use Naive Bayes to solve this problem. 
 In NB, the core assumption is that the features are conditionally independent given the class label but it is impossible in reality. however, NB still works well in practice.
 The model uses the prior probability $p(y)$ of given class and the conditional probability $p(x|y)$ of given class to predict the output distribution $p(y|x)$ and classify.
@@ -630,7 +650,127 @@ Solutions: $$p(y) = \frac{\sum_{i=1}^m1\{y^{(i)}=1\}}{m}$$
 and $$p(x_j\|y=0) = \frac{\sum_{i=1}^m1\{x_j^{(i)}=1,y^{(i)}=0\}}{\sum_{i=1}^m1\{y^{(i)}=0\}}$$
 
 **Loss Function: Maximum Likelihood Estimation**
-**Optimization: Gradient Descent**
+
+**Laplace Smoothing**: to avoid the problem of zero probability, we can add a small number $\epsilon$ to the numerator and denominator.
+
+**Cases**: text classification, spam detection, etc.
+**Advantages**: computation is efficient, and quick to implement.
+**disadvantages**: separate features, so it can't learn the interactions between features. word embeddings (from neural network) can solve this problem.
+
+## 7. Support Vector Machine
+for *non-linearly* separable data, we can use SVM to solve this problem. SVM is a discriminative learning algorithm. it is a binary classifier.
+
+recommend reading: [Zhihu](https://zhuanlan.zhihu.com/p/77750026)
+
+### 7.1 Margin
+**Description**: the margin is the distance between the decision boundary and the closest training example. the goal of SVM is to maximize the margin.
+
+![picture](imgs/7-%20svm1.png)
+
+**Model: SVM**
+hyperplane: $w^Tx+b=0$
+decision function: $$h_\theta(x) = g(w^Tx+b)$$
+$$g(z) = \begin{cases}1 & w^Tx+b\geq0\\-1 & w^Tx+b<0\end{cases}$$
+
+functional margin: the distance between the decision boundary and the training example.
+$$\hat{\gamma}^{(i)} = y^{(i)}(w^Tx^{(i)}+b)$$
+geometric margin: the distance between the decision boundary and the closest training example.
+$$\gamma^{(i)} = y^{(i)}(\frac{w}{||w||}^Tx^{(i)}+\frac{b}{||w||})$$
+if $||w||=1$, the functional margin equals the geometric margin.
 
 
+**Loss Function: Maximum Geometry Margin**
+$$\max_{\gamma,w,b}\gamma= \max_{\gamma,w,b}\frac{\hat{\gamma}}{||w||}\sim \min_{\gamma,w,b}\frac{1}{2}||w||^2$$
+$$s.t. y^{(i)}(w^Tx^{(i)}+b)-1\geq0, i=1,...,m$$
+$$||w||=1$$
+**Optimization: Convex Quadratic Programming**
 
+The decision boundary is related to the **support vectors**. the support vectors are the training examples that are closest to the decision boundary. the decision boundary is the hyperplane that is equidistant from the support vectors.
+
+**Soft margin**: the data is not linearly separable, so we can use soft margin to solve this problem. we can introduce the slack variable $\xi$ to the functional margin.
+
+### 7.2 Lagrange Duality
+**Description**: Lagrange Duality is a method to solve the optimization problem with constraints. it is a general method to solve the optimization problem.
+
+Consider the following optimization problem:
+$$\min_{w}f(w)$$
+$$s.t. h_i(w)=0, i=1,...,l$$
+$$g_j(w)\leq0, j=1,...,m$$
+where $f:\mathbb{R}^n\rightarrow\mathbb{R}$, $h_i:\mathbb{R}^n\rightarrow\mathbb{R}$, $g_j:\mathbb{R}^n\rightarrow\mathbb{R}$.
+
+In this method, we define the generalized Lagrangian function:
+$$L(w,\alpha,\beta) = f(w) + \sum_{i=1}^l\alpha_ih_i(w) + \sum_{j=1}^m\beta_jg_j(w)$$
+where $\alpha_i$ and $\beta_j$ are Lagrange multipliers.
+
+The dual function is:
+$$\theta(\alpha,\beta) = \min_{w}L(w,\alpha,\beta)$$
+$$s.t. \alpha_i\geq0, i=1,...,l$$
+
+The dual problem is:
+$$\max_{\alpha,\beta}\theta(\alpha,\beta)$$
+
+
+### 7.3 KKT Conditions
+**Description**: KKT conditions are the necessary conditions for the optimization problem. if the optimization problem is convex, the KKT conditions are also the sufficient conditions.
+
+**KKT Conditions**
+$$\frac{\partial L}{\partial w_i} = 0, i=1,...,n$$
+$$\frac{\partial L}{\partial \alpha_i} = 0, i=1,...,l$$
+$$\frac{\partial L}{\partial \beta_i} = 0, i=1,...,m$$
+$$h_i(w)=0, i=1,...,l$$
+$$g_j(w)\leq0, j=1,...,m$$
+$$\beta_j\geq0, j=1,...,m$$
+$$\beta_jg_j(w)=0, j=1,...,m$$
+
+### 7.4 SVM Optimization steps
+$$\min_{w,b}\frac{1}{2}||w||^2$$
+$$s.t. y^{(i)}(w^Tx^{(i)}+b)-1\geq0, i=1,...,m$$
+**Step 1**: we can use the Lagrange Duality to solve the optimization problem of SVM.
+$$ \min_{\omega,b}\max_\lambda L(w,b,\lambda) = \min_{\omega,b}\max_\lambda\frac{1}{2}||w||^2+\sum_{i=1}^m\lambda_i(1-y^{(i)}(w^Tx^{(i)}+b))$$
+$$s.t. \lambda_i\geq0, i=1,...,m$$
+
+**Step 2**: according to the KKT conditions and hard dual, we can get the following optimization problem:
+$$\min_{\omega,b} L(w,b,\lambda) ={\lambda}\sum_{i=1}^m\lambda_i-\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\lambda_i\lambda_jy^{(i)}y^{(j)}x^{(i)T}x^{(j)}$$
+
+**Step 3**: 
+$$\max \sum_{i=1}^m\lambda_i-\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\lambda_i\lambda_jy^{(i)}y^{(j)}x^{(i)T}x^{(j)}$$
+$$s.t. \sum_{i=1}^m\lambda_iy^{(i)}=0$$
+We can use the SMO algorithm to solve the optimization problem of SVM.
+**SMO**(Squential Minimal Optimization) alogirithm with its core idea of selecting two variables to optimize at each step, and then fixing the other variables, and then optimizing the two variables, and then fixing the other variables, and so on, until the convergence of the objective function.
+The primal constraint is: $\sum_{i=1}^m\lambda_iy^{(i)}=0$.
+The new constraint becomes: $\lambda_iy^{(i)}+\lambda_jy^{(j)}=c$. and iterating until the convergence of the objective function.
+
+**Step 4**: after getting the optimal $\lambda$, we can get the optimal $w$ and $b$.
+$$w = \sum_{i=1}^m\lambda_iy^{(i)}x^{(i)}$$
+$$b = y^{(j)}-\sum_{i=1}^m\lambda_iy^{(i)}x^{(i)T}x^{(j)}$$
+the decision boundary is: $w^Tx+b=0$.
+the decision function is: $f(x)=sign(w^Tx+b)$.
+### 7.5 Kernel Methods
+for **non-linearly** separable data, we can use kernel methods to solve this problem. kernel methods are a class of algorithms for pattern analysis. kernel methods are widely used in SVM.
+
+**Kernel Function**
+**Description**: kernel function is a function that computes the inner product of two vectors in a higher dimensional space. 
+$$K(x,z) = \phi(x)^T\phi(z)$$
+where $\phi$ is a mapping function that maps the input space to a higher dimensional space.
+
+**Kernel Trick**: we can use kernel function to compute the inner product of two vectors in a higher dimensional space without explicitly computing the mapping function $\phi$.
+
+**Kernel Matrix**: the kernel matrix is a matrix of the inner products of all pairs of a dataset.
+
+commonly used kernel functions:
+1. linear kernel: $K(x,z)=x^Tz$
+2. polynomial kernel: $K(x,z)=(x^Tz+1)^d$
+3. Gaussian kernel: $K(x,z)=exp(-\frac{||x-z||^2}{2\sigma^2})$
+4. Laplace kernel: $K(x,z)=exp(-\frac{||x-z||}{\sigma})$
+
+The **advantages** and **disadvantages** of SVM:
+Advantages:
+1. SVM is suitable for small sample size and high-dimensional data.
+2. SVM is suitable for solving non-linear classification problems and regression problems by using kernel methods.
+3. The decision function of SVM is only related to a few support vectors, so it is not sensitive to the change of the training set which avoids the problem of dimension disaster.
+4. SVM can solve the problem of overfitting by introducing the penalty factor $C$.
+
+Disadvantages:
+1. SVM is not suitable for large sample size and high-dimensional data.
+2. The training time of SVM is relatively long.
+3. The selection of kernel function is not easy and the the space complexity is high. 
