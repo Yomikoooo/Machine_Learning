@@ -12,7 +12,8 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [Projects in kaggle:](#projects-in-kaggle)
     - [Papers:](#papers)
 - [Notes](#notes)
-  - [online notes](#online-notes)
+  - [Online notes](#online-notes)
+  - [Reading materials:](#reading-materials)
   - [0. Basics](#0-basics)
     - [Intro:](#intro)
     - [0.1. Data processing:](#01-data-processing)
@@ -28,13 +29,12 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
   - [1. Training and Fitting](#1-training-and-fitting)
     - [1.1. Overfitting and Underfitting](#11-overfitting-and-underfitting)
     - [1.2. Regularization](#12-regularization)
-      - [1.2.1. L1 Regularization](#121-l1-regularization)
-      - [1.2.2. L2 Regularization](#122-l2-regularization)
-      - [1.2.3. Dropout](#123-dropout)
     - [1.3. Data Augmentation](#13-data-augmentation)
     - [1.4. Early Stopping](#14-early-stopping)
+    - [1.5. Dropout](#15-dropout)
     - [1.5. Trade-off between bias and variance](#15-trade-off-between-bias-and-variance)
     - [1.6. Cross Validation](#16-cross-validation)
+    - [1.7 Model Selection](#17-model-selection)
   - [2. Optimization](#2-optimization)
     - [2.1. Gradient Descent](#21-gradient-descent)
       - [2.1.1. Batch Gradient Descent](#211-batch-gradient-descent)
@@ -65,9 +65,9 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
 
 
 ## My Learning Process:
-python libraries(pytorch, numpy, pandas, matplotlib) $\rightarrow$ opencourse(lec and hw and proj) $\rightarrow$ books(including math) $\rightarrow$ projects(find in github or kaggle) $\rightarrow$ papers(top conf and research group)
+**python libraries**(pytorch, numpy, pandas, matplotlib) $\rightarrow$ **opencourse**(lec and hw and proj) $\rightarrow$ **books**(including math) $\rightarrow$ **projects**(find in github or kaggle) $\rightarrow$ **papers**(top conf and research group)
 
-**Detailed**: assuming math preliminary is equipped(at least calculus, linear algebra, probability theory and some mathematical statistics basics, if not sure how many to learn, go to book `PRML`), some crash tutorial of `python libraries`(official tutorial is enough), then go to `CS229(or NTU ML2023)` for machine learning basics, after that go to `CS231n` for deep learning basics and computer vision, then go to `CS224n` for natural language processing basics. 
+**Detailed**: assuming math preliminary is equipped(at least calculus, linear algebra, probability theory and some mathematical statistics basics, if not sure how many to learn, go to book `PRML` or `Prob ML`), some crash tutorial of `python libraries`(official tutorial is enough), then go to `CS229(or NTU ML2023)` for machine learning basics, after that go to `CS231n` for deep learning basics and computer vision, then go to `CS224n` for natural language processing basics. 
 If research, read papers in `top conferences` and `research groups`.
 If find jobs, go to `kaggle` to do some projects.
 
@@ -127,17 +127,27 @@ If not enough, RSS feed is useful.
 
 
 # Notes
-## online notes
-|Chapter|Link|Task
+## Online notes
+|Chapter|Link(Chinese)|Task
 |:--|:--|:--|
-|0. Basics
+|0. Basics| [bias and variance](https://zhuanlan.zhihu.com/p/38853908), [Regularization](https://www.zhihu.com/question/20924039/answer/240037674)
 |1. Linear Regression
-|2. Logistic Regression
+|2. Logistic Regression|[Zhihu](https://zhuanlan.zhihu.com/p/74874291)|classification
 |3. Generalized Linear Models
-|4. Gaussian Discriminant Analysis
-|5. Naive Bayes
-|6. Support Vector Machines|[Zhihu(Chinese)](https://zhuanlan.zhihu.com/p/77750026)|classification
-|7. Kernel Methods
+|4. Gaussian Discriminant Analysis|[Zhihu](https://zhuanlan.zhihu.com/p/36982945)|classification
+|5. Naive Bayes|[Zhihu](https://www.zhihu.com/question/265995680/answer/303148257)|classification
+|6. Support Vector Machines|[Zhihu](https://zhuanlan.zhihu.com/p/77750026)|classification
+|7. Kernel Methods|[Zhihu](https://www.zhihu.com/question/24627666/answer/28460490)|SVM trick
+|8. Decision Trees|[Zhihu](https://zhuanlan.zhihu.com/p/85731206)|classification
+|9. Random Forest|
+|10. Boosting Methods|
+|11. PCA|
+
+
+## Reading materials:
+[Full stack deep learning](https://zhuanlan.zhihu.com/p/218468169)
+[Full stack LLM bootcamp](https://zhuanlan.zhihu.com/p/629589593)
+
 ## 0. Basics
 
 ### Intro:
@@ -508,13 +518,29 @@ def save_prediction(model, test_loader):
 overfitting: the model performs well on the training data but performs poorly on the test data.
 underfitting: the model performs poorly on both the training data and the test data.
 ### 1.2. Regularization
-#### 1.2.1. L1 Regularization
-#### 1.2.2. L2 Regularization
-#### 1.2.3. Dropout
+Ruegularization is a technique to prevent overfitting.
+The simplest explanation of regularization is that we add a penalty term to the loss function. It looks like we add a prior probability to the loss function.
+The regularization term is usually the norm of the parameters.
+
+**L1** regularization is also called **Lasso** regularization.
+$$L1 = \lambda\sum_{j=1}^n|\theta_j|$$
+example: L1 in linear regression
+$$L = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^n|\theta_j|$$
+
+**L2** regularization is also called **Ridge** regularization.
+$$L2 = \lambda\sum_{j=1}^n\theta_j^2$$
+example: L2 in linear regression
+$$L = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^n\theta_j^2$$
 ### 1.3. Data Augmentation
+
 ### 1.4. Early Stopping
+
+
+### 1.5. Dropout
 ### 1.5. Trade-off between bias and variance
 ### 1.6. Cross Validation
+### 1.7 Model Selection
+
 ## 2. Optimization
 ### 2.1. Gradient Descent
 #### 2.1.1. Batch Gradient Descent
@@ -751,9 +777,9 @@ for **non-linearly** separable data, we can use kernel methods to solve this pro
 **Kernel Function**
 **Description**: kernel function is a function that computes the inner product of two vectors in a higher dimensional space. 
 $$K(x,z) = \phi(x)^T\phi(z)$$
-where $\phi$ is a mapping function that maps the input space to a higher dimensional space.
+where $\phi$ is a feature mapping function that maps the input space to a higher dimensional space.
 
-**Kernel Trick**: we can use kernel function to compute the inner product of two vectors in a higher dimensional space without explicitly computing the mapping function $\phi$.
+**Kernel Trick**: The feature mapping function $\phi$ is often difficult to compute because it will map the feature space to a higher dimensional space even infinite dimensional space. The kernel trick is to find a kernel function that can directly compute the inner product of two vectors in a higher dimensional space without explicitly computing the feature mapping function $\phi$.
 
 **Kernel Matrix**: the kernel matrix is a matrix of the inner products of all pairs of a dataset.
 
@@ -774,3 +800,5 @@ Disadvantages:
 1. SVM is not suitable for large sample size and high-dimensional data.
 2. The training time of SVM is relatively long.
 3. The selection of kernel function is not easy and the the space complexity is high. 
+
+## 8. Decision Tree
