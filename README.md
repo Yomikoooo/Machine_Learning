@@ -10,7 +10,7 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [Math foundation:](#math-foundation)
     - [OpenCourses:](#opencourses)
     - [Projects in kaggle:](#projects-in-kaggle)
-    - [Papers:](#papers)
+    - [NLP Papers:](#nlp-papers)
 - [Notes](#notes)
   - [Online notes](#online-notes)
   - [Reading materials:](#reading-materials)
@@ -37,13 +37,6 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [1.7 Model Selection](#17-model-selection)
   - [2. Optimization](#2-optimization)
     - [2.1. Gradient Descent](#21-gradient-descent)
-      - [2.1.1. Batch Gradient Descent](#211-batch-gradient-descent)
-      - [2.1.2. Stochastic Gradient Descent](#212-stochastic-gradient-descent)
-      - [2.1.3. Mini-batch Gradient Descent](#213-mini-batch-gradient-descent)
-    - [2.2. Momentum](#22-momentum)
-    - [2.3. AdaGrad](#23-adagrad)
-    - [2.4. Adam](#24-adam)
-    - [2.5. RMSProp](#25-rmsprop)
   - [3. Linear Regression](#3-linear-regression)
   - [4. Classification](#4-classification)
     - [4.1. Logistic Regression](#41-logistic-regression)
@@ -62,6 +55,24 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [7.3 KKT Conditions](#73-kkt-conditions)
     - [7.4 SVM Optimization steps](#74-svm-optimization-steps)
     - [7.5 Kernel Methods](#75-kernel-methods)
+  - [8. Neural Network](#8-neural-network)
+    - [8.1. Fully-connected neural network](#81-fully-connected-neural-network)
+    - [8.2. Feature engineering](#82-feature-engineering)
+    - [8.3. Residual Network (ResNet)](#83-residual-network-resnet)
+    - [8.4. Layer Normalization (LN)](#84-layer-normalization-ln)
+    - [8.5. Batch Normalization (BN)](#85-batch-normalization-bn)
+    - [8.6. Convolutional Layers](#86-convolutional-layers)
+    - [8.7. Backpropagation](#87-backpropagation)
+  - [9. Generalization](#9-generalization)
+    - [9.1. Overfitting and underfitting](#91-overfitting-and-underfitting)
+    - [9.2. Double descent phenomenon](#92-double-descent-phenomenon)
+    - [9.3. Sample complexity bounds](#93-sample-complexity-bounds)
+  - [10. Regularization and model selection](#10-regularization-and-model-selection)
+    - [10.1. L1 and L2 regularization](#101-l1-and-l2-regularization)
+    - [10.2. Implicit regularization](#102-implicit-regularization)
+    - [10.3. Cross-validation](#103-cross-validation)
+  - [11. Clustering and the k-means algorithm](#11-clustering-and-the-k-means-algorithm)
+  - [12. EM algorithms](#12-em-algorithms)
 
 
 ## My Learning Process:
@@ -88,6 +99,7 @@ If not enough, RSS feed is useful.
 ### Books:
 | Name | Author | Code | Note |
 | :--: | :--: | :--: | :--: |
+| Probabilistic machine learning | Kevin P. Murphy | [repo](https://github.com/probml/pyprobml/tree/master/notebooks)|
 | Statistical Learning Method |Hang Li|[repo1](https://github.com/SleepyBag/Statistical-Learning-Methods),[repo2](https://github.com/fengdu78/lihang-code) | |
 | Pattern Recognition and Machine Learning | Christopher M. Bishop | 
 | Deep Learning |Ian Goodfellow|
@@ -119,10 +131,19 @@ If not enough, RSS feed is useful.
 | Name |  Task | Code | Note |
 | :--: |  :--: | :--: | :--: |
 
-### Papers:
-| Name | Author | Field | Code | Note |
+### NLP Papers:
+| Keywords | Institute | Paper | Publication | Date |
 | :--: | :--: | :--: | :--: | :--: |
-| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin | NLP | 
+| Word2Vec | Google | [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781) | ICLR 2013 | 2013.01 |
+| Attention | Google | [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) | ICLR 2015 | 2014.09 |
+| Transformer | Google | [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | NIPS 2017 | 2017.06 |
+| BERT | Google | [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805) | NAACL 2019 | 2018.10 |
+| GPT | OpenAI | [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf) | OpenAI Blog | 2018.06 |
+| GPT-2 | OpenAI | [Language Models are Unsupervised Multitask Learners](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf) | OpenAI Blog | 2019.02 |
+| RoBERTa | Facebook | [RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/abs/1907.11692) | arXiv | 2019.07 |
+| T5 | Google | [Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683) | arXiv | 2019.10 |
+| GPT-3 | OpenAI | [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) | arXiv | 2020.05 |
+
 
 
 
@@ -543,13 +564,6 @@ $$L = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^
 
 ## 2. Optimization
 ### 2.1. Gradient Descent
-#### 2.1.1. Batch Gradient Descent
-#### 2.1.2. Stochastic Gradient Descent
-#### 2.1.3. Mini-batch Gradient Descent
-### 2.2. Momentum
-### 2.3. AdaGrad
-### 2.4. Adam
-### 2.5. RMSProp
 
 ## 3. Linear Regression
 **Cases**: Boston Housing Price Prediction, Stock Price Prediction, etc.
@@ -801,4 +815,216 @@ Disadvantages:
 2. The training time of SVM is relatively long.
 3. The selection of kernel function is not easy and the the space complexity is high. 
 
-## 8. Decision Tree
+## 8. Neural Network
+**Description**: Neural network is a machine learning algorithm inspired by the structure of the human brain. Neural network is a supervised learning algorithm that can be used for both classification and regression. Neural network is a non-linear model that can solve non-linear problems.
+
+### 8.1. Fully-connected neural network
+**Description**: fully-connected neural network is a neural network that each neuron in the current layer is connected to all neurons in the previous layer. The fully-connected neural network is also called multi-layer perceptron(MLP).
+
+We can stack more layers to get a deeper FCNN. For each neuron in the hidden layer, we use the **activation function** to get output. The output of the hidden layer is the **input** of the next layer. The output of the last layer is the output of the FCNN. The equation is as follows:
+$$h^{(i)} = f(W^{(i)}h^{(i-1)}+b^{(i)})$$
+where $h^{(i)}$ is the output of the $i$-th layer, $W^{(i)}$ is the weight matrix of the $i$-th layer, $b^{(i)}$ is the bias vector of the $i$-th layer, $f$ is the activation function.
+
+The function is usually a non-linear function, such as sigmoid function, tanh function, **ReLU function**, etc.
+
+Sigmoid function and tanh has the problem of gradient vanishing. ReLU function can solve the problem of gradient vanishing. GELU and leaky ReLU are both variants of ReLU but they have non-zero gradients when the input is negative. GELU is used in NLP models such as BERT and GPT.
+
+### 8.2. Feature engineering
+**Description**: feature engineering is the process of using domain knowledge to extract features from raw data. Feature engineering is very important for machine learning. The quality of the features will have a great impact on the performance of the model.
+
+For example: in **Kernel Method**, we use the kernel function to map the input space to a higher dimensional space. In Neural Network, we use the hidden layer to map the input space to a higher dimensional space. In both cases, we need to find a good feature mapping function.
+
+We can view deep learning as a way to automatically learn the right feature map(or representation) for the task at hand.
+
+The **multi-layer model** can be rewritten as follows:
+$$ \hat h_{\theta}(x)=W^{(L)}f(W^{(L-1)}f(...f(W^{(1)}x+b^{(1)})...)+b^{(L-1)})+b^{(L)}$$
+where $f$ is the activation function, $W^{(i)}$ is the weight matrix of the $i$-th layer, $b^{(i)}$ is the bias vector of the $i$-th layer.
+
+The **penultimate** layer is called the **bottleneck layer** and it is often referred to as the learned features or representations in the context of deep learning.
+
+### 8.3. Residual Network (ResNet)
+**Description**: Residual Network is a neural network that uses residual blocks. Residual Network is a deep neural network that can solve the problem of gradient vanishing.
+
+**residual block:**
+$$\text{Res}(z)=z+\sigma(MM(\sigma(MM(z))))$$
+where $z$ is the input of the residual block, $MM$ is the matrix multiplication, $\sigma$ is the activation function.
+
+**ResNet-Skip:**
+$$\text{Res-}S(x)=MM(\sigma(MM(\sigma(MM(x)))))$$
+
+### 8.4. Layer Normalization (LN)
+**Description**: Layer Normalization is a normalization method that normalizes the output of each layer. Layer Normalization is used in the Transformer model.
+
+first define a sub-module of LN, denoted by LN-S. The input of LN-S is a vector $x$, the output of LN-S is a vector $y$.:
+$$\text{LN-S}(z)=
+\begin{bmatrix}
+\frac{z_1-\mu}{\sqrt{\sigma^2+\epsilon}} \\
+\frac{z_2-\mu}{\sqrt{\sigma^2+\epsilon}} \\
+\vdots \\
+\frac{z_n-\mu}{\sqrt{\sigma^2+\epsilon}} \\
+\end{bmatrix}
+$$
+where $\mu$ is the empirical mean of $z$, $\sigma$ is the standard deviation of $z$, $\epsilon$ is a small constant to avoid division by zero. $\text{LN-S(z)}$ is a vector that is normalized to having empirical mean zero and empirical standard deviation 1.
+
+Oftentimes, layernorm introduces to learnable parameters $\alpha$ and $\beta$:
+$$\text{LN}(z)=\alpha\text{LN-S}(z)+\beta = \begin{bmatrix} \alpha\frac{z_1-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta \\ \alpha\frac{z_2-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta \\ \vdots \\ \alpha\frac{z_n-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta \\ \end{bmatrix}$$
+
+**Scaling-invariant property**. If we scale the input $z$ by a constant $c$, the output of LN-S is also scaled by $c$: The scaling-invariant property is important for the Transformer model and other modern DL architectures.
+The equation is as follows:
+First,
+$$\text{LN-S}(\alpha z)=\alpha\text{LN-S}(z)$$
+Then we can prove that:
+$$\text{LN}(\text{MM}_{\alpha W,\alpha b}(z))=\text{LN}(\text{MM}_{W,b}(z))$$
+
+### 8.5. Batch Normalization (BN)
+
+
+### 8.6. Convolutional Layers
+**Description**: Convolutional Neural Networks are NN that consist of convolution layers, usually used in CV and NLP applications. 1-D convolution in the text and 2-D for images.
+
+**1-D convolution:**
+**Kernel(or filter)**: Conv1D-S
+filter vector: $w=[w_1,w_2,...,w_k]$, where k is the kernel size.
+In CNN, kernel is a learnable parameter and shared across different positions of the input vector.
+$$\text{Conv1D-S(z)}_i=w_1z_{i-l}+w_2z_{i-2}+...+w_{2l+1}z_{i+l} = \sum_{j=1}^{2l+1}w_jz_{i-l+j}$$
+where $z$ is the input vector, $l$ is the padding size.
+We can view Conc1D-S as a matrix as a matrix multiplication: with shared parameters: $$\text{Conv1D-S(z)}=Qz$$
+where $Q$ is a matrix with shape $(n,n)$, $n$ is the length of the input vector $z$.
+$$Q= \begin{bmatrix} w_1 & w_2 & \cdots & w_{2l+1} & 0 & \cdots & 0 \\ 0 & w_1 & w_2 & \cdots & w_{2l+1} & \cdots & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\ 0 & 0 & \cdots & 0 & w_1 & w_2 & \cdots & w_{2l+1} \\ \end{bmatrix}$$
+where $w_1,w_2,...,w_{2l+1}$ are the parameters of the convolution layer.
+
+Convolution is supposed to be much more efficient than a generic matrix multiplication because of complexity $O(n)$.
+
+
+**2-D convolution**
+
+### 8.7. Backpropagation
+**Description**: Backpropagation(or auto-differentiation) is a method to compute the gradient of the loss function with respect to the parameters of the model with complexity $O(n)$. Backpropagation is used in training neural networks.
+
+**backward:**
+Chain rule:
+$$\frac{\partial L}{\partial W^{(i)}}=\frac{\partial L}{\partial h^{(i)}}\frac{\partial h^{(i)}}{\partial W^{(i)}}$$
+where $L$ is the loss function, $h^{(i)}$ is the output of the $i$-th layer, $W^{(i)}$ is the weight matrix of the $i$-th layer.
+
+The **backward function** is always a linear map from $\frac{\partial L}{\partial h^{(i)}}$ to $\frac{\partial L}{\partial W^{(i)}}$. It is a Jacobian matrix of the backward function is $\frac{\partial h^{(i)}}{\partial W^{(i)}}$. Equation as follows:
+$$\frac{\partial h^{(i)}}{\partial W^{(i)}}=\begin{bmatrix} \frac{\partial h^{(i)}_1}{\partial W^{(i)}_{11}} & \frac{\partial h^{(i)}_1}{\partial W^{(i)}_{12}} & \cdots & \frac{\partial h^{(i)}_1}{\partial W^{(i)}_{1n}} \\ \frac{\partial h^{(i)}_2}{\partial W^{(i)}_{21}} & \frac{\partial h^{(i)}_2}{\partial W^{(i)}_{22}} & \cdots & \frac{\partial h^{(i)}_2}{\partial W^{(i)}_{2n}} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial h^{(i)}_m}{\partial W^{(i)}_{m1}} & \frac{\partial h^{(i)}_m}{\partial W^{(i)}_{m2}} & \cdots & \frac{\partial h^{(i)}_m}{\partial W^{(i)}_{mn}} \\ \end{bmatrix}$$
+where $m$ is the number of neurons in the $i$-th layer, $n$ is the number of neurons in the $(i-1)$-th layer.
+
+The steps of backpropagation:
+1. Forward pass: compute the **output** of each layer and save the intermediate results.
+2. Compute the **loss** between output and label.
+3. Backward pass: compute the **gradient** of the loss with respect to the parameters of the model just by using the intermediate results and mapping function.
+More precisely, we can write the following function:
+$$\frac{\partial J}{\partial u^{i-1}} = \mathcal{B}[M_i,u^{i-1}](\frac{\partial J}{\partial u^{i}})$$
+where M is mapping function and u is the intermediate result.
+
+4. Update the parameters of the model with **gradient descent**.
+5. repeat steps 1-4 until convergence.
+
+Notice that NN can be viewed as compositions of small modules because small modules tend to have efficiently implementable backward function.
+
+If we use smaller modules, that is ,treating the vec2vec nonlinear activation as $m$ scalar2scalar nonlinear activation, then the backward function is a diagonal matrix, which is much more efficient than the full matrix.
+
+## 9. Generalization
+**Description**: Generalization is the ability of a model to perform well on unseen data. It is the most important evalutation metric of a model.
+
+### 9.1. Overfitting and underfitting
+
+Test error is the most important metric for generalization.
+Sometimes successfully minimizing the training error does not guarantee a low test error. This is called **overfitting**.
+If the training error is relatively large, then the model is **underfitting**.
+
+Test error is decomposed into **"bias"** and **"variance"**. We study how each of them is affected by the choice of model parameterizations and their **tradeoff**.
+
+**bias**: the difference between the average prediction of our model and the correct value which we are trying to predict. A high bias means that our model is not complex enough to capture the pattern in the data, lack of expressivity of the model. Every model has some inherent bias, but we want to keep this bias small. 
+
+High-order polynomial regression performs better on bias because if setting high-order variables' coefficients to zero, it contains the result of low-order polynomial regression. However, high-order polynomial regression performs worse on variance because it is more sensitive to the training data. The subtle change of training data will cause a large change of the model.
+
+**variance**: a large risk that we're fitting patterns in the data that happened to be present in small, finite training set, but don‘t reflect the wider pattern of the relationship between feature and label. The model learnt spurious patterns.
+
+**tradeoff**: the bias-variance tradeoff is the point where we are adding just enough complexity to capture the patterns in the data without overfitting it.
+
+The test error will have a convex curve as the model complexity increases.
+
+![bias-variance tradeoff](imgs/tradeoff.png)
+
+**decomposition of test error:** $$\text{Test Error} = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$$
+Take the example of MSE: $$\text{MSE}(x) = \mathbb{E}(y-\hat{f}(x))^2 = \text{Bias}^2 + \text{Variance} + \sigma^2
+$$ 
+where $$\text{Bias}^2 = \mathbb{E}[\hat{f}(x)-f(x)]^2$$
+$$\text{Variance} = \mathbb{E}[\hat{f}(x)-\mathbb{E}[\hat{f}(x)]]^2$$
+$$\text{Irreducible Error} = \sigma^2$$
+where $\hat{f}(x)$ is the prediction of the model, $f(x)$ is the true value, $\sigma^2$ is the variance of the noise.
+
+### 9.2. Double descent phenomenon
+**Description**: Double descent phenomenon is a phenomenon that the test error decreases as the model complexity increases, then increases, and finally decreases again.
+![double descent](imgs/doubledescent.png)
+**Model-wise double descent**, In many cases, larger overparameterized models always lead to a better test performance.
+
+**Sample-wise double descent**, test error is not monotonically decreasing as we increase the sample size.
+To some extent, the two double descent phenomenon are essentially describing similar phenomena——the rest error is peaked when $n\approx d$. where $n$ is the number of examples and $d$ is the number of parameters.
+
+**Explanations and mitigation strategies:** to explain why overparameterized models is an active research area with many recent advances. A typical explanation is that the commonly-used optimizers such as SGD provide an implicit regularization effect. 
+
+### 9.3. Sample complexity bounds
+**The union bound:** $$\mathbb{P}(\cup_{i=1}^n A_i) \leq \sum_{i=1}^n \mathbb{P}(A_i)$$
+
+**Hoeffding's inequality:** Let $X_1,\cdots,X_n$ be independent random variables such that $a_i\leq X_i\leq b_i$ almost surely for all $i$. Let $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$. Then for any $\epsilon>0$, $$\mathbb{P}(|\bar{X}-\mathbb{E}[\bar{X}]|\geq \epsilon) \leq 2\exp(-\frac{2n^2\epsilon^2}{\sum_{i=1}^n (b_i-a_i)^2})$$
+
+**Chernoff bound**: Let $X_1,\cdots,X_n$ be independent random variables such that $0\leq X_i\leq 1$ almost surely for all $i$. Let $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$. Then for any $\epsilon>0$, $$\mathbb{P}(\bar{X}\geq \epsilon) \leq \mathbb{E}[\exp(\lambda(\bar{X}-\epsilon))] \leq \exp(-\lambda\epsilon)\prod_{i=1}^n \mathbb{E}[\exp(\lambda X_i)]$$
+
+## 10. Regularization and model selection
+**Description**: Regularization is a technique to prevent overfitting. Model selection is the process of choosing the best model from a set of candidate models.
+
+regularization typically involves adding an additioncal term, called a regularizer and denoted by $R(\theta)$, to a loss function $J(\theta)$, which is then minimized during training. The regularizer is typically a penalty term that is small when the parameters are close to zero and large otherwise.
+$$J_\lambda(\theta) = J(\theta) + \lambda R(\theta)$$
+
+If the regularizer is extremely large, then the original loss is not effective and likely the model will have a large bias.
+
+### 10.1. L1 and L2 regularization
+**L1 regularization** is also called **Lasso regularization**. It is defined as $$R(\theta) = \sum_{i=1}^n |\theta_i|$$
+**L2 regularization** is also called **Ridge regularization**. It is defined as $$R(\theta) = \frac{1}{2}  ||\theta_i||_2^2$$
+
+In deep learning, it's oftentime referred to as **weight decay**. It is called weight decay because the regularization term is added to the loss function and the optimizer updates the weights to minimize the loss function. The weights are decayed toward zero.
+$$\theta \leftarrow (1-\eta\lambda)\theta - \eta\frac{\partial J}{\partial \theta}$$
+
+**Sparsity of the model:** Imposing a regularization on the number of non-zero parameters, which makes the complexity of model family smaller, and tend to lead to a better generalization. L1 regularization is a good way to achieve this goal.
+
+### 10.2. Implicit regularization
+**Description**: Implicit regularization is a phenomenon that the optimizers can implicitly impose structures on parameters. For example, SGD with a small learning rate can implicitly impose a L2 regularization on the parameters.
+
+In deep learning, oftentimes the loss or regularized loss has more than one global minimum, though they have the same or similar training loss, but have dramatically different generalization performance.
+
+In summary, the choice of optimizer does not only affect minimizing the training loss, but also affects the generalization performance. Even if your current optimizer already converges to a small training loss, you may still need to tune your optimizer to achieve better generalization performance.
+
+Some methods: the use of larger initial learning rate, smaller initialization, smaller batch size, and momentum.
+
+Flat global minimua tend to give more Lipschitz models and better generalization performance.
+
+### 10.3. Cross-validation
+**Description**: Cross-validation is a technique for model selection. It is used to estimate the generalization performance of a model. It is oftentimes called **hold-out cross validation**.
+
+**K-fold cross-validation** is a common technique for model selection.
+The process of cross-validation is as follows:
+1. Split the dataset into $k$ folds. We call this fold is hold-out cross validation set.
+2. For each fold, train the model on the remaining $k-1$ folds and evaluate the model on the current fold.
+3. Repeat the above process for each fold and average the evaluation results.
+4. Choose the model with the best average evaluation result.
+
+## 11. Clustering and the k-means algorithm
+Clusterting problem is that we are given a training set and want to group the data into a few cohesive "clusters". Here $x$ as usual, but no label $y$ are given. So this is an unsupervised learning problem.
+
+The k-means clustering algorithm is as follows: 
+1. Initialize the cluster centers $\mu_1,\cdots,\mu_k$.
+2. Repeat until convergence:
+    a. For each $i$, set $C_i$ to be the set of points $x^{(i)}$ that are closer to $\mu_i$ than to any other $\mu_j$. (assign the points to the closest cluster center)
+    $$C_i = \{x^{(i)}:||x^{(i)}-\mu_i||_2^2\leq ||x^{(i)}-\mu_j||_2^2 \text{ for all } j\}$$
+
+    b. For each $j$, set $\mu_j$ to be the mean of all the points $x^{(i)}$ in $C_j$. (update the cluster centers)
+    $$\mu_j = \frac{1}{|C_j|}\sum_{x^{(i)}\in C_j} x^{(i)}$$
+
+![k-means](./imgs/kmeans.png)
+
+**distort function** is defined as $$J(c^{(1)},\cdots,c^{(m)},\mu_1,\cdots,\mu_k) = \frac{1}{m}\sum_{i=1}^m ||x^{(i)}-\mu_{c^{(i)}}||_2^2$$. It measures the sum of squared distances between each training example and its closest cluster center.
+
+## 12. EM algorithms
