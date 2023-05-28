@@ -14,27 +14,18 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
 - [Notes](#notes)
   - [Online notes](#online-notes)
   - [Reading materials:](#reading-materials)
-  - [0. Basics](#0-basics)
+  - [1. Basics](#1-basics)
     - [Intro:](#intro)
-    - [0.1. Data processing:](#01-data-processing)
-    - [0.2. Model:](#02-model)
-    - [0.3. Loss function](#03-loss-function)
-      - [0.3.1. MLE](#031-mle)
-      - [0.3.2. MAE](#032-mae)
-      - [0.3.3. Cross Entropy](#033-cross-entropy)
-    - [0.4. Optimization algorithm:](#04-optimization-algorithm)
-      - [0.4.1. Gradient Descent](#041-gradient-descent)
-      - [0.4.2. Newton's Method](#042-newtons-method)
-    - [0.5. Data Loader](#05-data-loader)
-  - [1. Training and Fitting](#1-training-and-fitting)
-    - [1.1. Overfitting and Underfitting](#11-overfitting-and-underfitting)
-    - [1.2. Regularization](#12-regularization)
-    - [1.3. Data Augmentation](#13-data-augmentation)
-    - [1.4. Early Stopping](#14-early-stopping)
-    - [1.5. Dropout](#15-dropout)
-    - [1.5. Trade-off between bias and variance](#15-trade-off-between-bias-and-variance)
-    - [1.6. Cross Validation](#16-cross-validation)
-    - [1.7 Model Selection](#17-model-selection)
+    - [1.1. Data processing:](#11-data-processing)
+    - [1.2. Model:](#12-model)
+    - [1.3. Loss function](#13-loss-function)
+      - [1.3.1. MLE](#131-mle)
+      - [1.3.2. MAE](#132-mae)
+      - [1.3.3. Cross Entropy](#133-cross-entropy)
+    - [1.4. Optimization algorithm:](#14-optimization-algorithm)
+      - [1.4.1. Gradient Descent](#141-gradient-descent)
+      - [1.4.2. Newton's Method](#142-newtons-method)
+    - [1.5. Data Loader](#15-data-loader)
   - [2. Optimization](#2-optimization)
     - [2.1. Gradient Descent](#21-gradient-descent)
   - [3. Linear Regression](#3-linear-regression)
@@ -42,19 +33,19 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [4.1. Logistic Regression](#41-logistic-regression)
     - [4.2. Perceptron learning aigorithm](#42-perceptron-learning-aigorithm)
   - [5. Generalized Linear Model](#5-generalized-linear-model)
-    - [5.1 Exponential Family](#51-exponential-family)
+    - [5.1. Exponential Family](#51-exponential-family)
     - [5.2. Generalized Linear Model](#52-generalized-linear-model)
-    - [5.3 Softmax Regression](#53-softmax-regression)
+    - [5.3. Softmax Regression](#53-softmax-regression)
   - [6. Generative learning algorithms](#6-generative-learning-algorithms)
     - [6.1. Generative vs. Discriminative](#61-generative-vs-discriminative)
-    - [6.2 Gaussian Discriminant Analysis](#62-gaussian-discriminant-analysis)
+    - [6.2. Gaussian Discriminant Analysis](#62-gaussian-discriminant-analysis)
     - [6.3. Naive Bayes](#63-naive-bayes)
   - [7. Support Vector Machine](#7-support-vector-machine)
-    - [7.1 Margin](#71-margin)
-    - [7.2 Lagrange Duality](#72-lagrange-duality)
-    - [7.3 KKT Conditions](#73-kkt-conditions)
-    - [7.4 SVM Optimization steps](#74-svm-optimization-steps)
-    - [7.5 Kernel Methods](#75-kernel-methods)
+    - [7.1. Margin](#71-margin)
+    - [7.2. Lagrange Duality](#72-lagrange-duality)
+    - [7.3. KKT Conditions](#73-kkt-conditions)
+    - [7.4. SVM Optimization steps](#74-svm-optimization-steps)
+    - [7.5. Kernel Methods](#75-kernel-methods)
   - [8. Neural Network](#8-neural-network)
     - [8.1. Fully-connected neural network](#81-fully-connected-neural-network)
     - [8.2. Feature engineering](#82-feature-engineering)
@@ -71,8 +62,32 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [10.1. L1 and L2 regularization](#101-l1-and-l2-regularization)
     - [10.2. Implicit regularization](#102-implicit-regularization)
     - [10.3. Cross-validation](#103-cross-validation)
-  - [11. Clustering and the k-means algorithm](#11-clustering-and-the-k-means-algorithm)
+  - [11. Clustering and the K-means algorithm](#11-clustering-and-the-k-means-algorithm)
   - [12. EM algorithms](#12-em-algorithms)
+    - [12.1. Gaussian mixture models](#121-gaussian-mixture-models)
+    - [12.2. Jensen's inequality](#122-jensens-inequality)
+    - [12.3. Proof of EM algorithm](#123-proof-of-em-algorithm)
+    - [12.4. Variational inference and variational auto-encoder(VAE)](#124-variational-inference-and-variational-auto-encodervae)
+    - [12.5. Factor analysis](#125-factor-analysis)
+  - [13. Principal components analysis(PCA)](#13-principal-components-analysispca)
+    - [13.1. PCA algorithm](#131-pca-algorithm)
+    - [13.2. Singular value decomposition(SVD)](#132-singular-value-decompositionsvd)
+    - [13.3. PCA and LDA](#133-pca-and-lda)
+  - [14. Independent component analysis(ICA)](#14-independent-component-analysisica)
+    - [14.1. ICA ambiguity](#141-ica-ambiguity)
+    - [14.2. ICA algorithm](#142-ica-algorithm)
+  - [15. Evaluation Metrics](#15-evaluation-metrics)
+    - [15.1. Binary Classification](#151-binary-classification)
+    - [15.2. Multi-class Classification](#152-multi-class-classification)
+    - [15.3. Regression](#153-regression)
+    - [15.4. Other Metrics](#154-other-metrics)
+  - [16. Reinforcement learning and adaptive control](#16-reinforcement-learning-and-adaptive-control)
+    - [16.1. Markov Decision Process (MDP)](#161-markov-decision-process-mdp)
+  - [New Topics(Self-supervised learning and founcation models):](#new-topicsself-supervised-learning-and-founcation-models)
+    - [Pretraining and adaptation](#pretraining-and-adaptation)
+    - [Pretraining methods in Computer vision](#pretraining-methods-in-computer-vision)
+    - [Pretrained large language model](#pretrained-large-language-model)
+    - [Finetuning, Zero-shot learning, In-context learning](#finetuning-zero-shot-learning-in-context-learning)
 
 
 ## My Learning Process:
@@ -152,24 +167,27 @@ If not enough, RSS feed is useful.
 |Chapter|Link(Chinese)|Task
 |:--|:--|:--|
 |0. Basics| [bias and variance](https://zhuanlan.zhihu.com/p/38853908), [Regularization](https://www.zhihu.com/question/20924039/answer/240037674)
-|1. Linear Regression
+|1. Linear Regression ||regression
 |2. Logistic Regression|[Zhihu](https://zhuanlan.zhihu.com/p/74874291)|classification
-|3. Generalized Linear Models
+|3. Generalized Linear Models 
 |4. Gaussian Discriminant Analysis|[Zhihu](https://zhuanlan.zhihu.com/p/36982945)|classification
 |5. Naive Bayes|[Zhihu](https://www.zhihu.com/question/265995680/answer/303148257)|classification
 |6. Support Vector Machines|[Zhihu](https://zhuanlan.zhihu.com/p/77750026)|classification
 |7. Kernel Methods|[Zhihu](https://www.zhihu.com/question/24627666/answer/28460490)|SVM trick
 |8. Decision Trees|[Zhihu](https://zhuanlan.zhihu.com/p/85731206)|classification
-|9. Random Forest|
-|10. Boosting Methods|
-|11. PCA|
+|9. Random Forest| |classification
+|10. Boosting Methods| |classification
+|11. K-means| | clustering
+|12. EM Algorithm|[Zhihu](https://zhuanlan.zhihu.com/p/36331115)|clustering
+|13. PCA|[Zhihu](https://zhuanlan.zhihu.com/p/32412043)|dimensionality reduction
+|14. ICA|[Zhihu](https://www.zhihu.com/question/28845451/answer/42292804) |dimensionality reduction 
 
 
 ## Reading materials:
 [Full stack deep learning](https://zhuanlan.zhihu.com/p/218468169)
 [Full stack LLM bootcamp](https://zhuanlan.zhihu.com/p/629589593)
 
-## 0. Basics
+## 1. Basics
 
 ### Intro:
 Machine Learning is finding a function $f$ that maps input $x$ to output $y$.
@@ -195,7 +213,7 @@ where $P(D|\theta)$ is the likelihood, $P(\theta)$ is the prior, $P(D)$ is the e
 
 where $D$ is the data, $\theta$ is the parameter.
 
-### 0.1. Data processing:
+### 1.1. Data processing:
 
 some python libraries to be used:
 ```python
@@ -324,7 +342,7 @@ def select_feature(train_data,test_data,select_all=True)
 
 ```
 
-### 0.2. Model: 
+### 1.2. Model: 
 If machine learning, we use linear regression, logistic regression, SVM, etc.
 If deep learning, we use neural network, CNN, ResNet, etc.
 + linear regression is a special case of neural network(only one layer)
@@ -361,23 +379,23 @@ class NeuralNetwork(nn.Module):
 ```
 
 
-### 0.3. Loss function
+### 1.3. Loss function
 is used to measure the difference between the predicted value and the real value.
 
 some common loss functions: MAE, MSE, Cross Entropy, etc.
 
-#### 0.3.1. MLE
+#### 1.3.1. MLE
 **MSE:**
 $$J(\theta) = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2$$
 probablistic interpretation: It can be derived from the **maximum likelihood estimation (MLE)** of the Gaussian distribution. 
 linear algebra interpretation: It can be derived from the **least square estimation (LSE)** of the linear system.
 
-#### 0.3.2. MAE
+#### 1.3.2. MAE
 **MAE:**
 $$J(\theta) = \frac{1}{m}\sum_{i=1}^m|h_\theta(x^{(i)})-y^{(i)}|$$
 probablistic interpretation: It can be derived from the **maximum likelihood estimation (MLE)** of the Laplace distribution.
 
-#### 0.3.3. Cross Entropy
+#### 1.3.3. Cross Entropy
 **Cross Entropy:**
 $$J(\theta) = -\frac{1}{m}\sum_{i=1}^m\sum_{k=1}^Ky_k^{(i)}log(h_\theta(x^{(i)}))_k$$
 where $y_k^{(i)}$ is the one-hot encoding of the real label, $h_\theta(x^{(i)})_k$ is the predicted probability of the $k$-th class.
@@ -392,12 +410,12 @@ criterion = nn.CrossEntropyLoss()
 loss = criterion(y_pred, y)
 ```
 
-### 0.4. Optimization algorithm:
+### 1.4. Optimization algorithm:
 to find the real parameters, we need to minimize the loss function
 
 some common optimization algorithms: **Gradient Descent(SGD)**, Newton's Method, Adam, Adagrad, etc.
 
-#### 0.4.1. Gradient Descent
+#### 1.4.1. Gradient Descent
 **Gradient Descent** is a first-order iterative optimization algorithm for finding the minimum of a function. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or approximate gradient) of the function at the current point.
 $$\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta)$$
 where $\alpha$ is the learning rate., $\frac{\partial}{\partial\theta_j}J(\theta)$ is the partial derivative of the loss function with respect to $\theta_j$.
@@ -415,7 +433,7 @@ in gradient landscape, local minimum is not guaranteed. So we need to use **mult
 
 **momentum** is a variant of GD. it uses the previous gradients to update the parameters. it is faster than GD and more stable than SGD and mini-batch GD.
 
-#### 0.4.2. Newton's Method
+#### 1.4.2. Newton's Method
 **Newton's Method** is a second-order iterative optimization algorithm for finding the minimum of a function. It is faster than GD but it is not stable. especially when the number of features is large, it is very slow because it needs to calculate the inverse of the Hessian matrix.
 $$\theta := \theta - H^{-1}\nabla_\theta J(\theta)$$
 where $H$ is the Hessian matrix of the loss function with respect to $\theta$.
@@ -448,7 +466,7 @@ config = {
 
 }
 ```
-### 0.5. Data Loader
+### 1.5. Data Loader
 
 before training, we need to create a **data loader** to load the data.
 ```python
@@ -534,33 +552,6 @@ def save_prediction(model, test_loader):
     files.download('prediction.csv')
     files.download('best_model.pth')
 ```
-## 1. Training and Fitting
-### 1.1. Overfitting and Underfitting
-overfitting: the model performs well on the training data but performs poorly on the test data.
-underfitting: the model performs poorly on both the training data and the test data.
-### 1.2. Regularization
-Ruegularization is a technique to prevent overfitting.
-The simplest explanation of regularization is that we add a penalty term to the loss function. It looks like we add a prior probability to the loss function.
-The regularization term is usually the norm of the parameters.
-
-**L1** regularization is also called **Lasso** regularization.
-$$L1 = \lambda\sum_{j=1}^n|\theta_j|$$
-example: L1 in linear regression
-$$L = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^n|\theta_j|$$
-
-**L2** regularization is also called **Ridge** regularization.
-$$L2 = \lambda\sum_{j=1}^n\theta_j^2$$
-example: L2 in linear regression
-$$L = \frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^n\theta_j^2$$
-### 1.3. Data Augmentation
-
-### 1.4. Early Stopping
-
-
-### 1.5. Dropout
-### 1.5. Trade-off between bias and variance
-### 1.6. Cross Validation
-### 1.7 Model Selection
 
 ## 2. Optimization
 ### 2.1. Gradient Descent
@@ -602,7 +593,7 @@ $$L(\theta) = \sum_{i=1}^m\mathbb{1}\{y^{(i)}\neq h_\theta(x^{(i)})\}$$
 
 ## 5. Generalized Linear Model
 special cases: Linear Regression, Logistic Regression, Perceptron, etc. broader family of models called Generalized Linear Model(**GLMs**).
-### 5.1 Exponential Family
+### 5.1. Exponential Family
 **Description**: Exponential Family is a family of probability distributions. it includes many common distributions, such as Gaussian distribution, Bernoulli distribution, Poisson distribution, etc. in GLMs, the output distribution is a member of the exponential family.
 **Model: Exponential Family**
 $$p(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$
@@ -625,7 +616,7 @@ $$Var[T(y)] = \frac{\partial^2 a(\eta)}{\partial\eta^2}$$
 **Description**: GLM and exponential family are closely related. We just need to estiamte the natural parameter $\eta$ of the exponential family. the natural parameter $\eta=\theta^Tx$ is a linear function of the input features $x$.
 our goal is to predict the expected value of $T(y)$, which is the mean of the output distribution.
 
-### 5.3 Softmax Regression
+### 5.3. Softmax Regression
 **Description**: Softmax Regression is a generalization of Logistic Regression. it is a multi-class classifier. it can only classify linearly separable data.
 
 |Distribution|$\eta$| $T(y)$| $a(\eta)$| $b(y)$|
@@ -652,7 +643,7 @@ $$p(y|x) = \frac{p(x|y)p(y)}{p(x)}$$
 |what to learn| $p(x\|y)$ and $p(y)$| $p(y\|x)$ or $h_\theta(x)$|
 |example| Naive Bayes, LDA, GDA| Logistic Regression, SVM, Neural Network|
 
-### 6.2 Gaussian Discriminant Analysis
+### 6.2. Gaussian Discriminant Analysis
 **Description**: Gaussian Discriminant Analysis is a generative learning algorithm. in GDA, the output distribution is Gaussian distribution. it is a binary classifier.
 
 Gaussian and logistic regression is closely related. if the covariance matrix $\Sigma$ is diagonal, then GDA is equivalent to logistic regression.
@@ -702,7 +693,7 @@ for *non-linearly* separable data, we can use SVM to solve this problem. SVM is 
 
 recommend reading: [Zhihu](https://zhuanlan.zhihu.com/p/77750026)
 
-### 7.1 Margin
+### 7.1. Margin
 **Description**: the margin is the distance between the decision boundary and the closest training example. the goal of SVM is to maximize the margin.
 
 ![picture](imgs/7-%20svm1.png)
@@ -729,7 +720,7 @@ The decision boundary is related to the **support vectors**. the support vectors
 
 **Soft margin**: the data is not linearly separable, so we can use soft margin to solve this problem. we can introduce the slack variable $\xi$ to the functional margin.
 
-### 7.2 Lagrange Duality
+### 7.2. Lagrange Duality
 **Description**: Lagrange Duality is a method to solve the optimization problem with constraints. it is a general method to solve the optimization problem.
 
 Consider the following optimization problem:
@@ -750,7 +741,7 @@ The dual problem is:
 $$\max_{\alpha,\beta}\theta(\alpha,\beta)$$
 
 
-### 7.3 KKT Conditions
+### 7.3. KKT Conditions
 **Description**: KKT conditions are the necessary conditions for the optimization problem. if the optimization problem is convex, the KKT conditions are also the sufficient conditions.
 
 **KKT Conditions**
@@ -762,7 +753,7 @@ $$g_j(w)\leq0, j=1,...,m$$
 $$\beta_j\geq0, j=1,...,m$$
 $$\beta_jg_j(w)=0, j=1,...,m$$
 
-### 7.4 SVM Optimization steps
+### 7.4. SVM Optimization steps
 $$\min_{w,b}\frac{1}{2}||w||^2$$
 $$s.t. y^{(i)}(w^Tx^{(i)}+b)-1\geq0, i=1,...,m$$
 **Step 1**: we can use the Lagrange Duality to solve the optimization problem of SVM.
@@ -785,7 +776,7 @@ $$w = \sum_{i=1}^m\lambda_iy^{(i)}x^{(i)}$$
 $$b = y^{(j)}-\sum_{i=1}^m\lambda_iy^{(i)}x^{(i)T}x^{(j)}$$
 the decision boundary is: $w^Tx+b=0$.
 the decision function is: $f(x)=sign(w^Tx+b)$.
-### 7.5 Kernel Methods
+### 7.5. Kernel Methods
 for **non-linearly** separable data, we can use kernel methods to solve this problem. kernel methods are a class of algorithms for pattern analysis. kernel methods are widely used in SVM.
 
 **Kernel Function**
@@ -1011,7 +1002,7 @@ The process of cross-validation is as follows:
 3. Repeat the above process for each fold and average the evaluation results.
 4. Choose the model with the best average evaluation result.
 
-## 11. Clustering and the k-means algorithm
+## 11. Clustering and the K-means algorithm
 Clusterting problem is that we are given a training set and want to group the data into a few cohesive "clusters". Here $x$ as usual, but no label $y$ are given. So this is an unsupervised learning problem.
 
 The k-means clustering algorithm is as follows: 
@@ -1028,3 +1019,269 @@ The k-means clustering algorithm is as follows:
 **distort function** is defined as $$J(c^{(1)},\cdots,c^{(m)},\mu_1,\cdots,\mu_k) = \frac{1}{m}\sum_{i=1}^m ||x^{(i)}-\mu_{c^{(i)}}||_2^2$$. It measures the sum of squared distances between each training example and its closest cluster center.
 
 ## 12. EM algorithms
+
+### 12.1. Gaussian mixture models
+**Description**: EM(Expectation Maximi) algorithm is a technique for maximum likelihood estimation in the presence of missing data(or density). It is also used for unsupervised learning problems.
+
+In least mean square(linear regression) and cross entropy(logistic regression), minimizing the loss function is equivalent to maximizing the log-likelihood function.
+
+A typical example is that we have a dataset $\{x^{(1)},\cdots,x^{(m)}\}$, and we want to fit a **Gaussian mixture model(GMM)** to the data. The GMM is defined as $$p(x) = \sum_{i=1}^k \phi_i \mathcal{N}(x;\mu_i,\Sigma_i)$$
+where $\phi_i$ is the prior probability of the $i$th component, $\sum_{i=1}^k \phi_i = 1$, $\mathcal{N}(x;\mu_i,\Sigma_i)$ is the Gaussian distribution with mean $\mu_i$ and covariance matrix $\Sigma_i$.
+
+K-means algorithm is a **special case** of GMM, where the covariance matrix $\Sigma_i$ is a diagonal matrix with identical entries.
+
+**SMO** and **HMM** are also application of EM algorithm.
+
+**Latent random variables:** $z^{(i)}$ is the latent random variable that indicates which component generated the $i$th data point. $z^{(i)}$ is a $k$-dimensional binary random vector, and $z_j^{(i)}$ indicates whether the $i$th data point is generated by the $j$th Gaussian distribution.
+
+**Complete-data log-likelihood:** The complete-data log-likelihood is defined as $$\ell(\phi,\mu,\Sigma) = \sum_{i=1}^m \log p(x^{(i)},z^{(i)};\phi,\mu,\Sigma)$$
+
+**EM algorithm:** The EM algorithm is an iterative algorithm that has two steps: E-step and M-step.
+
+**E-step:** In the E-step, we compute the posterior probability of the latent variable $z^{(i)}$ given the observed data $x^{(i)}$ and the current estimate of the parameters $\phi,\mu,\Sigma$.
+$$w_j^{(i)} = p(z_j^{(i)}=j|x^{(i)};\phi,\mu,\Sigma)$$
+where $w_j^{(i)}$ is the posterior probability that the $i$th data point was generated by the $j$th Gaussian distribution.
+
+**M-step:** In the M-step, we update the parameters $\phi,\mu,\Sigma$ using the posterior probabilities computed in the E-step.
+$$\mu_j = \frac{\sum_{i=1}^m w_j^{(i)}x^{(i)}}{\sum_{i=1}^m w_j^{(i)}}$$
+$$\Sigma_j = \frac{\sum_{i=1}^m w_j^{(i)}(x^{(i)}-\mu_j)(x^{(i)}-\mu_j)^T}{\sum_{i=1}^m w_j^{(i)}}$$
+$$\phi_j = \frac{1}{m}\sum_{i=1}^m w_j^{(i)}$$
+
+**Iternation:** In E-step, by Bayes rule, we obtain:
+$$p(z^{(i)}=j|x^{(i)};\phi,\mu,\Sigma) = \frac{p(x^{(i)}|z_j^{(i)}=j;\mu,\Sigma)p(z_j^{(i)}=j;\phi)}{\sum_{l=1}^k p(x^{(i)}|z^{(i)}=l;\mu,\Sigma)p(z^{(i)}=l;\phi)}$$
+Here, $p(x^{(i)}|z_j^{(i)}=j;\mu,\Sigma) = \mathcal{N}(x^{(i)};\mu_j,\Sigma_j)$ and $p(z_j^{(i)}=j;\phi) = \phi_j$.
+
+### 12.2. Jensen's inequality
+**Description**: Jensen's inequality is a useful inequality in machine learning. It is used to prove that the EM algorithm monotonically increases the log-likelihood function.
+$$f(\mathbb{E}[x])\leq \mathbb{E}[f(x)]$$
+where $f$ is a convex function. If hessian matrix of $f$ is positive semi-definite, then $f$ is strictly convex.
+The equality holds if and only if $x$ is a constant.
+
+### 12.3. Proof of EM algorithm
+where $\theta$ is the parameters of the model, and $z$ is the latent variable.
+Maximize the log-likelihood function:
+$$\theta,z = \arg\max_{\theta,z} \sum_{i=1}^m \log p(x^{(i)},z^{(i)};\theta)$$
+$$\theta,z = \arg\max_{\theta,z} \sum_{i=1}^m \log\sum_{z^{(i)}}q(z^{(i)}) \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}$$
+where $\sum_{z^{(i)}}q(z^{(i)}) = 1$.
+by Jensen's inequality, we have:
+$$\theta,z \geq \arg\max_{\theta,z} \sum_{i=1}^m \sum_{z^{(i)}}q(z^{(i)}) \log \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}$$
+which means $\mathbb{E}_q[\log \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}]$ is the i-th sample, and $q_i(z^{(i)})$ is the weight of the i-th sample.
+we can get:
+$$\mathbb{E}_q[\log \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}]=\sum_{z^{(i)}}q(z^{(i)}) \log \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}$$
+That's why **Expectation**. and the right side of the equation is the **evidence lower bound(ELBO)** of the log-likelihood function. and we denote it by 
+$$\text{ELBO}(x,q,\theta) = \sum_{z^{(i)}}q(z^{(i)}) \log \frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}$$
+by the equality of Jensen's inequality, we have:
+$$\frac{p(x^{(i)},z^{(i)};\theta)}{q(z^{(i)})}=c$$
+$$p(x^{(i)},z^{(i)};\theta)=cq(z^{(i)})$$
+$$\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta)=c\sum_{z^{(i)}}q(z^{(i)})=c$$
+$$q(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta)}=p(z^{(i)}|x^{(i)};\theta)$$
+What we need to maximize is:
+$$\arg\max_{\theta} \sum_{i=1}^m \sum_{z^{(i)}}q_i(z^{(i)}) \log \frac{p(x^{(i)},z^{(i)};\theta)}{q_i(z^{(i)})}$$
+That's why **Maximization**.
+
+The **convergence** of EM algorithm is guaranteed by the fact that the log-likelihood function is a concave function of the parameters $\theta$.
+We have to prove:
+$$\ell(\theta^{(t+1)})\geq \ell(\theta^{(t)})$$
+by ELBO, we have:
+$$\ell(\theta) \ge \text{ELBO}(x^{(i)},q,\theta) = \sum_{i=1}^m \sum_{z^{(i)}}q_i(z^{(i)}) \log \frac{p(x^{(i)},z^{(i)};\theta)}{q_i(z^{(i)})}$$
+and we have:
+$$\ell(\theta^{(t)}) = \sum_{i=1}^m \text{ELBO}(x,q^{(t)},\theta^{(t)})$$
+because $\ell(\theta) \ge \text{ELBO}(x^{(i)},q,\theta)$ holds for all q and $\theta$, we have:
+$$\ell(\theta^{(t+1)}) \ge \sum^n_{i=1}\text{ELBO}(x,q^{(t)},\theta^{(t+1)})$$
+$$\ell(\theta^{(t+1)}) \ge \sum^n_{i=1}\text{ELBO}(x,q^{(t)},\theta^{(t)}) = \ell(\theta^{(t)})$$
+
+### 12.4. Variational inference and variational auto-encoder(VAE)
+**Description**: Variational inference is a method to approximate the posterior distribution of the latent variable. It is used in VAE to approximate the posterior distribution of the latent variable.
+
+### 12.5. Factor analysis
+Factor analysis is a method to find the latent variable of the data. It is similar to PCA, but it is a probabilistic model. We use FA to find the latent variable of the data.
+
+factor analysis is a linear model:
+$$x = Wz + \mu + \epsilon$$
+where $z$ is the latent variable, $W$ is the factor loading matrix, $\mu$ is the mean of the data, and $\epsilon$ is the noise, $x$ is the data.
+
+
+
+## 13. Principal components analysis(PCA)
+PCA is one of the most important algorithms in machine learning. It is used to reduce the dimension of the data. The core idea is to **maximize the variance** of the data.
+
+We want to find a principal component to represent the data. That reduces the dimension of the data. In other words, there will be less information loss. What we need to do is to reduce the loss as much as possible.
+
+![PCA](./imgs/pca.png)
+where $u_1$ is the first principal component, and $u_2$ is the second principal component, from the figure, $u_1$ has a better performance.
+
+### 13.1. PCA algorithm
+The main idea is to find a projection matrix $P$ to project the data to a lower dimension.
+1. Normalize the data.
+$$x^{(i)} \leftarrow \frac{x^{(i)}-\mu}{\sigma}$$
+where $\mu$ is the mean of the data, and $\sigma$ is the standard deviation of the data.
+2. Compute the covariance matrix.
+$$\Sigma = \frac{1}{m}\sum_{i=1}^m x^{(i)}{x^{(i)}}^T$$
+3. Compute the eigenvectors and eigenvalues of the covariance matrix.
+$$\Sigma u^{(i)} = \lambda^{(i)}u^{(i)}$$
+where $u^{(i)}$ is the eigenvector, and $\lambda^{(i)}$ is the eigenvalue.
+4. Choose the first $k$ eigenvectors which correspond to the $k$ largest eigenvalues and construct a matrix $P$.
+5. Compute the new data.
+$$z^{(i)} = P^Tx^{(i)}$$
+where $z^{(i)}$ is the new data.
+
+### 13.2. Singular value decomposition(SVD)
+SVD is a method to decompose a matrix into three matrices. It is used in PCA to compute the eigenvectors and eigenvalues of the covariance matrix.
+
+### 13.3. PCA and LDA
+PCA is an unsupervised learning algorithm, while LDA is a supervised learning algorithm. PCA is used to reduce the dimension of the data, while LDA is used to find the best projection to separate the data.
+
+## 14. Independent component analysis(ICA)
+ICA is a method to find the independent components of the data. It is similar to PCA, but it is a probabilistic model. We use ICA to find the independent components of the data. The core idea is to **maximize the non-Gaussianity** of the data. And a signal can be decomposed into linear combinations of independent components.
+
+We observe that:
+$$x = As$$
+where $x$ is the data, $A$ is the mixing matrix, and $s$ is the independent components of the data.
+
+our **goal** is to recover the source signal $s$ from the data $x$.
+### 14.1. ICA ambiguity
+It is impossible to recover the source signal $s$ from the data $x$ because we can't determine the order of the independent components without any prior knowledge. For a given signal, there are many ways and mixing matrices(permutation) to generate the signal.
+
+### 14.2. ICA algorithm
+distribution of each source $s_j$ is given by a density $p_s$, and that the joint distribution of the sources $s$ is given by:
+$$p(s) = \prod_{j=1}^n p_s(s_j)$$ 
+the density of $x$ is given by:
+$$p_x(x) =  p_s(Wx)\cdot |W|$$
+where $W=A^{-1}$ is the unmixing matrix, and $|W|$ is the determinant of $W$.
+so, the sources $s$ can be rewritten by:
+$$s = Wx$$
+$$p(x)=\prod_{j=1}^n p_s(w_jx) \cdot |W|$$
+where $w_j$ is the $j$th row of $W$.
+
+To specify a density for the $s_is$, all we need to do is to specify a cumulative distribution function(cdf) for it. It must be a monotonic function that increases from zero to one. So we can’t choose the Gaussian cdf, ICA doesn't work on Gaussian data. Instead, we choose the sigmoid function $g$. Hence, $p_s(s)=g'(s)$, 
+The likelihood is given by:
+$$\ell(W)=\sum_{i=1}^n(\sum^d_{j=1}\log g'(w_j^Tx)+\log |W|)$$
+
+The update rule is given by:
+$$W \leftarrow W + \alpha(\mathbb{I} + (1-2g(Wx))x^T)W$$
+where $\alpha$ is the learning rate, and $\mathbb{I}$ is the identity matrix.
+
+## 15. Evaluation Metrics
+It doesn't mean that the loss function converges, the model is good. We need some metrics to evaluate the model performance. The metrics depend on different tasks.
+
+### 15.1. Binary Classification
+Two types of models:
+Models that output a categorial class directly (K-NN, Decision Tree)
+Models that output a real-valued score (SVM, Logistic Regression)
+
+**Accuracy:** The proportion of correct predictions. It is the most intuitive metric.
+**Precision:** The proportion of true classified samples among all the samples.
+$$\text{Precision} = \frac{\text{TP+TN}}{\text{TP+TN}+\text{FP+FN}}$$
+**Recall:** The proportion of true classified samples among all the positive samples.
+$$\text{Recall} = \frac{\text{TP}}{\text{TP+FN}}$$
+**F1 score:** The harmonic mean of precision and recall. If imbalance exists in the data, we use F1 score to evaluate the model.
+$$\text{F1 score} = \frac{2\cdot \text{Precision}\cdot \text{Recall}}{\text{Precision}+\text{Recall}}$$
+**ROC curve:** The curve of the true positive rate and the false positive rate.
+$$\text{TPR} = \frac{\text{TP}}{\text{TP+FN}}$$
+$$\text{FPR} = \frac{\text{FP}}{\text{FP+TN}}$$
+The $x$ axis is the FPR, and the $y$ axis is the TPR.
+
+**AUC:** The area under the ROC curve. It is a metric to evaluate the performance of the model. The larger the AUC, the better the model.
+**log loss:** It is used to evaluate the performance of the model that outputs a real-valued score. The smaller the log loss, the better the model.
+$$\text{log loss} = -\frac{1}{m}\sum_{i=1}^m(y^{(i)}\log(\hat{y}^{(i)})+(1-y^{(i)})\log(1-\hat{y}^{(i)}))$$
+where $y^{(i)}$ is the true label, and $\hat{y}^{(i)}$ is the predicted label.
+
+### 15.2. Multi-class Classification
+**Macro averaged precision:** The average of the precision of each class.
+$$\text{Macro averaged precision} = \frac{1}{k}\sum_{i=1}^k\text{Precision}_i$$
+**Micro averaged precision:** Compute the confusion matrix, and compute the precision.
+$$\text{Micro averaged precision} = \frac{\sum^n_{i=1}TP_i}{\sum^n_{i=1}(TP_i+FP_i)}$$
+**Weighted precision:** The weighted average of the precision of each class.
+
+### 15.3. Regression
+**Mean absolute error(MAE):** The average of the absolute difference between the true value and the predicted value.
+$$\text{MAE} = \frac{1}{m}\sum_{i=1}^m|y^{(i)}-\hat{y}^{(i)}|$$
+**Mean squared error(MSE):** The average of the squared difference between the true value and the predicted value.
+$$\text{MSE} = \frac{1}{m}\sum_{i=1}^m(y^{(i)}-\hat{y}^{(i)})^2$$
+**Root mean squared error(RMSE):** The square root of the MSE.
+$$\text{RMSE} = \sqrt{\frac{1}{m}\sum_{i=1}^m(y^{(i)}-\hat{y}^{(i)})^2}$$
+**R-squared:** The proportion of the variance in the dependent variable that is predictable from the independent variable.
+$$\text{R-squared} = 1-\frac{\sum_{i=1}^m(y^{(i)}-\hat{y}^{(i)})^2}{\sum_{i=1}^m(y^{(i)}-\bar{y})^2}$$
+where $\bar{y}$ is the mean of the true value.
+
+### 15.4. Other Metrics
+**Confusion matrix:** It is used to evaluate the performance of the classification model. It is a $k\times k$ matrix, where $k$ is the number of classes. The $i$th row and the $j$th column is the number of samples that belong to the $i$th class but are classified to the $j$th class.
+**QWK(Quadratic Weighted Kappa):** It is used to evaluate the consistence between the true value and the predicted value. The larger the QWK, the better the model.
+$$\kappa = \frac{p_o-p_e}{1-p_e}$$
+where $p_o$ is the observed accuracy, and $p_e$ is the expected accuracy.
+**MCC(Matthew's Correlation Coefficient):** It is used to evaluate the performance of the classification model. The larger the MCC, the better the model.
+$$\text{MCC} = \frac{TP*TN-FP*FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}$$
+**Spearman correlation coefficient:** It is used to evaluate the consistence between the true value and the predicted value. The larger the coefficient, the better the model.
+
+## 16. Reinforcement learning and adaptive control
+**Reinforcement learning** is a type of machine learning that enables an agent to learn in an interactive environment by trial and error using feedback from its own actions and experiences. It is used to solve the problem of sequential decision making.
+### 16.1. Markov Decision Process (MDP)
+A Markov Decision Process is a tuple $(S,A,P,R,\gamma)$, where
+- $S$ is the set of states. (a set of all possible situations)
+- $A$ is the set of actions. (a set of all possible actions)
+- $P$ is the transition probability matrix.
+- $R$ is the reward function. (a function that maps a state-action pair to a real number)
+- $\gamma \in \text{[}0,1)$ is the discount factor. (a factor that determines the importance of future rewards)
+
+The total payoff is given by:
+$$G_t = R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}$$
+where $R_{t+k+1}$ is the reward at time $t+k+1$.
+The expected total payoff is given by:
+$$v_\pi(s) = \mathbb{E}_\pi[G_t|S_t=s]$$
+where $v_\pi(s)$ is the state value function, and $\pi$ is the policy.
+The **policy** is a function that maps a state $S$ to an action $A$.
+
+**Bellman equations** are a set of equations that decompose the value function into two parts: immediate reward and discounted value of successor state. The equation is given by:
+$$v_\pi(s) = R_s+\gamma\sum_{s'\in S}P_{ss'}^\pi v_\pi(s')$$
+where $R_s$ is the immediate reward, and $P_{ss'}^\pi$ is the transition probability from state $s$ to state $s'$ under policy $\pi$.
+
+The optimal value function is given by:
+$$v_*(s) = \max_\pi v_\pi(s)$$
+
+There is also a version of Bellman equations for the optimal value function:
+$$v_*(s) =R_s+ \max_a\gamma\sum_{s'\in S}P_{ss'}^a v_*(s')$$
+
+We define the policy $\pi^*$ as follows:
+$$\pi^*(s) = \arg\max_a\sum_{s'\in S}P_{ss'}^a v_*(s')$$
+
+## New Topics(Self-supervised learning and founcation models):
+### Pretraining and adaptation
+With the rise of models that are pre-trained on broad data at scale and are adaptable to a wide range of downstream tasks. These models, called **foundation models**, oftentimes leverage massive unlabeled data so that much fewer labeled data are needed for downstream tasks.
+
+The models are pre-trained by self-supervised learning methods where the labels come from parts of the inputs.
+
+Two phases: **pretraining and adaptation**.
+We first pretrain a large model on a massive unlabeled dataset(billions of unlabeled data). Then we adapt the model to a downstream task. These downstream tasks are often prediction tasks with limited or even no labeled data. The intuition is that the pretrained models learn good **representations** that capture intrinsic semantic structures about the data.
+
+Then **adaptation** phase customizes the model to a downstream task by retrieving the information specific to it. When zero examples, it is called **zero-shot learning**. the downstream task doesn't have any labeled examples. when the number of examples is small, it is called **few-shot learning**.
+
+### Pretraining methods in Computer vision
+**Supervised pretraining.** Here, the pretraining dataset is large-scale labeled data. and the pretrained models are simply a neural network trained with vanilla supervised learning (with the last layer being removed).
+
+**Contrastive learning.** uses only unlabeled data. The main intuition is that a good representation function should map semantically similar images to similar representations. Random pair of images should generally have distinct representations. The framework is to maximize the similarity between the semantically similar images and minimize the similarity between the random pair of images.
+**SIMCLR** is one of famous contrastive learning princlple.
+
+**Data augmentation:** Without labeled data, we can use data augmentation to generate a pair of "similar" augmented images given an original image $x$. Typically means that we apply random cropping, flipping, and color transformation on the original image #x# to generate a variant. 
+
+### Pretrained large language model
+The chain rule of probability is used to decompose the joint probability of a sequence of words into the product of conditional probabilities of each word given the previous words. The conditional probability of each word is modeled by a neural network. The model is trained by maximizing the likelihood of the training data.
+$$\log p(x_1,\cdots,x_n) = \sum_{i=1}^n\log p(x_i|x_1,\cdots,x_{i-1})$$
+We first turn the discrete words into word embeddings. **Transformer** is the most commonly used model. Computing the corresponding word embeddings, then passed to the transformer model, which takes in a **seq2seq**.
+
+The **autoregressive** version of transformers which makes sure that the next word  $c_t$ only depends on the previous words $(x_1,\cdots,x_{t-1})$. The $c_t$'s are often called the representations or the contextualized embeddings.
+
+![transformer](./imgs/gpt1.png)
+We parameterize $p(x_t|x_1,\cdots,x_{t-1})$ by a neural network $f_\theta$ with parameters $\theta$ and compute the conditional probability by applying softmax on the output of the neural network.
+$$\begin{bmatrix}
+p(x_t=1|x_1,\cdots,x_{t-1})\\
+\vdots\\
+p(x_t=V|x_1,\cdots,x_{t-1})
+\end{bmatrix}
+=\text{softmax}(W_t\phi_\theta(x_1,\cdots,x_{t-1}))$$
+where $V$ is the size of the vocabulary, $W_t$ is a $V\times d$ weight matrix, and $\phi_\theta$ is a neural network with parameters $\theta$.
+
+Let $p_t=\text{softmax}(W_t\phi_\theta(x_1,\cdots,x_{t-1}))$, then the loss function is given by:
+$$\mathcal{L} = -\sum_{t=1}^n\log p_t(x_t)$$
+where $t$ is the index(position) of the word in the sequence.
+
+### Finetuning, Zero-shot learning, In-context learning
