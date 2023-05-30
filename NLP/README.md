@@ -15,6 +15,9 @@ before beginning NLP course, we should study the machine learning.
     - [2.2. GloVe model](#22-glove-model)
     - [2.3. Evaluate word vectors](#23-evaluate-word-vectors)
     - [2.4. Word Sense](#24-word-sense)
+  - [3. Dependency parsing and Syntactic Structure](#3-dependency-parsing-and-syntactic-structure)
+    - [3.1. Constituency Parsing](#31-constituency-parsing)
+    - [3.2. Dependency Parsing](#32-dependency-parsing)
 
 ## 1. Word Vectors
 | Title | Author | Conference | Date | Model |
@@ -247,3 +250,69 @@ $$\text{bank} = \alpha_1\text{bank}_1 + \alpha_2\text{bank}_2 + \alpha_3 \text{b
 
 Because of ideas from sparse coding you can actually separate out the senses.
 ![word sense](./imgs/glove2.png)
+
+## 3. Dependency parsing and Syntactic Structure
+Phrase structure = Context-Free Grammars (**CFGs**) 
+
+Phrase structure organize words into nested **constituents**. Constituents are phrases that behave as a unit. Constituents are often noun phrases, verb phrases, prepositional phrases, etc.
+for example:
+| | | | | |
+|-|-|-|-|-|
+| |the| |cat| |
+| |a  | |dog| |
+| |   |large|     |in a crate
+| |   |barking|   |on the table
+| |   |cuddly|    |by the door
+|talk to| 
+|walked behind
+
+### 3.1. Constituency Parsing
+**Constituency parsing** is the task of recovering the constituency structure of a sentence. It is also called **phrase-structure parsing**.
+
+**Part of speech(POS)** tagging is a prerequisite for constituency parsing. We need to know the part of speech of each word in order to parse the sentence.
+
+For example, when we analyze the sentence "the cuddly cat by the door", 'the' is a determiner, 'cuddly' is an adjective, 'cat' is a noun, 'by' is a preposition, 'the' is a determiner, and 'door' is a noun.
+
+And then, 'the cuddly cat' is a noun phrase(NP), 'by the door' is a prepositional phrase(PP), and 'the cuddly cat by the door' is a noun phrase(NP).
+
+### 3.2. Dependency Parsing
+**Dependency Structure** is a tree that connects words according to their syntactic dependency relationship. The root of the tree is the main verb of the sentence. The tree is directed and acyclic.
+
+![parse tree](./imgs/parsing1.png)
+where nsubj is the nominal subject, aux is the auxiliary, nmod is the nominal modifier, obl is the oblique nominal.
+
+Because of many kinds of ambiguity, we need to use **Dependency Parsing**.
+What sources of information can we use dependency parsing?
+- Bilexical affinities: the words that are close to each other are more likely to be related.
+- Valency: the number of arguments a word takes.
+- Intervening material: Dependencies rarely span intervening verbs or punctuation.
+- Dependency distance: Most dependencies are between nearby words.
+
+A sentence is parsed by choosing for each word what other word it is a dependent of. 
+Usually some constraints:
+- There is only one root.
+- There are no cycles.
+
+This makes the dependencies a tree
+
+How to build a dependency tree: **Transition-based Dependency Parsing**. It can be considered as a finite state machine. For any $S=w_1 w_2 \cdots w_n$, we have a **stack** $s$, a **buffer** $b$, and a set of **dependencies** $A$ where the element is$(w_i, r, w_j)$, which means $w_i$ is the head of $w_j$ with relation $r$.
+
+
+The algorithm is:
+- Shift: move the first word in the buffer to the top of the stack.
+- Left-Arc: add a dependency $(w_i, r, w_j)$ to $A$, where $w_i$ is the top of the stack and $w_j$ is the second word in the stack.
+- Right-Arc: add a dependency $(w_j, r, w_i)$ to $A$, where $w_i$ is the top of the stack and $w_j$ is the second word in the stack.
+  
+Until the buffer is empty and the stack has only one element, which is the root. For each state, we can consider it as a multi-classification task(2R class for left and right) and apply softmax or SVM to choose the **next action**.
+
+For evalutaion, we have two metrics:
+-  **labeled attachment score(LAS)**, which is the percentage of words that have the correct head and the correct relation.
+-  **unlabeled attachment score(UAS)**, which is the percentage of words that have the correct head.
+
+**Neural Dependency Parsing** is used to improve the performance of dependency parsing. The idea is to use a neural network to predict the next action. The input is the current state, and the output is the next action.
+
+The input is stack, buffer, the set of dependencies, POS tag, arc label. 
+![neural dependency parsing](./imgs/parsing2.png)
+
+More advanced: **Graph-based Dependency Parsing**. It computes a score for every possible dependency for each word. The score is a combination of features of the two words and the relation between them. The score is computed by a neural network.
+![graph-based dependency parsing](./imgs/parsing3.png)
