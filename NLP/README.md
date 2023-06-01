@@ -18,6 +18,7 @@ before beginning NLP course, we should study the machine learning.
   - [3. Dependency parsing and Syntactic Structure](#3-dependency-parsing-and-syntactic-structure)
     - [3.1. Constituency Parsing](#31-constituency-parsing)
     - [3.2. Dependency Parsing](#32-dependency-parsing)
+  - [4. RNN(Recurrent Neural Network)](#4-rnnrecurrent-neural-network)
 
 ## 1. Word Vectors
 | Title | Author | Conference | Date | Model |
@@ -316,3 +317,5 @@ The input is stack, buffer, the set of dependencies, POS tag, arc label.
 
 More advanced: **Graph-based Dependency Parsing**. It computes a score for every possible dependency for each word. The score is a combination of features of the two words and the relation between them. The score is computed by a neural network.
 ![graph-based dependency parsing](./imgs/parsing3.png)
+
+## 4. RNN(Recurrent Neural Network)

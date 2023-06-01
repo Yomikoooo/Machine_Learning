@@ -62,6 +62,8 @@ It includes my learning path, hw and proj of the opencourse, and the conclusive 
     - [10.1. L1 and L2 regularization](#101-l1-and-l2-regularization)
     - [10.2. Implicit regularization](#102-implicit-regularization)
     - [10.3. Cross-validation](#103-cross-validation)
+    - [10.4. Dropout](#104-dropout)
+    - [10.5. Parameter Initialization](#105-parameter-initialization)
   - [11. Clustering and the K-means algorithm](#11-clustering-and-the-k-means-algorithm)
   - [12. EM algorithms](#12-em-algorithms)
     - [12.1. Gaussian mixture models](#121-gaussian-mixture-models)
@@ -1001,6 +1003,22 @@ The process of cross-validation is as follows:
 2. For each fold, train the model on the remaining $k-1$ folds and evaluate the model on the current fold.
 3. Repeat the above process for each fold and average the evaluation results.
 4. Choose the model with the best average evaluation result.
+
+### 10.4. Dropout
+**Description**: Dropout is a regularization technique that randomly drops out some units during training. It is a very effective regularization technique in deep learning.
+Usually, dropout is only used during training, and the units are not dropped out during testing. Except usually only drop first layer inputs a little or not at all.
+
+### 10.5. Parameter Initialization
+**Description**: It is a very important technique in deep learning. A good initialization can help the model converge faster and achieve better generalization performance.
+Before updating the parameters, we need to initialize the parameters. It is important that unsuitable initialization can lead to vanishing or exploding gradients because of large variance in hidden layer.
+
+**Zero** initialization: It is not a good choice because it will lead to symmetry breaking problem.
+
+**Random** initialization: It is a good choice. It can break the symmetry and make the model learn different features.
+
+**Xavier** initialization: It is a good choice for **tanh** activation function. The main idea is to make the variance of the outputs of a layer to be equal to the variance of its inputs, which avoids the output value going to 0. It samples in a uniform distribution between $[-\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}},\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}]$, where $n_j$ is the number of units in layer $j$.
+
+**He** initialization(or **MSRA**): It is a good choice for **ReLU** activation function. The main idea is assuming that only half of neurons in one layer are activated, the MSRA initialization is $w_{ij}\sim N(0,\frac{2}{n_j})$, where $n_j$ is the number of units in layer $j$. 
 
 ## 11. Clustering and the K-means algorithm
 Clusterting problem is that we are given a training set and want to group the data into a few cohesive "clusters". Here $x$ as usual, but no label $y$ are given. So this is an unsupervised learning problem.
