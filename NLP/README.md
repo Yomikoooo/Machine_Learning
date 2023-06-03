@@ -25,6 +25,13 @@ before beginning NLP course, we should study the machine learning.
     - [4.4. Long Short-Term Memory (LSTM)](#44-long-short-term-memory-lstm)
     - [4.5. Gated Recurrent Unit (GRU)](#45-gated-recurrent-unit-gru)
   - [5. Sequence-to-Sequence Models](#5-sequence-to-sequence-models)
+  - [6. Attention Mechanism](#6-attention-mechanism)
+  - [7. Transformer](#7-transformer)
+    - [7.1. Self-Attention](#71-self-attention)
+    - [7.2. Multi-head Attention](#72-multi-head-attention)
+    - [7.3. Positional Encoding](#73-positional-encoding)
+    - [7.4. Add \& Norm](#74-add--norm)
+    - [7.5. Output Embedding](#75-output-embedding)
 
 ## 1. Word Vectors
 | Title | Author | Conference | Date | Model |
@@ -259,6 +266,11 @@ Because of ideas from sparse coding you can actually separate out the senses.
 ![word sense](./imgs/glove2.png)
 
 ## 3. Dependency parsing and Syntactic Structure
+|Title|Author|Conference|Year|Model|
+|-|-|-|-|-|
+|[A Fast and Accurate Dependency Parser using Neural Networks](https://www.aclweb.org/anthology/D14-1082.pdf)|Danqi Chen, Christopher D. Manning|EMNLP|2014|Neural Network|
+
+
 Phrase structure = Context-Free Grammars (**CFGs**) 
 
 Phrase structure organize words into nested **constituents**. Constituents are phrases that behave as a unit. Constituents are often noun phrases, verb phrases, prepositional phrases, etc.
@@ -325,6 +337,10 @@ More advanced: **Graph-based Dependency Parsing**. It computes a score for every
 ![graph-based dependency parsing](./imgs/parsing3.png)
 
 ## 4. Language model and RNN(Recurrent Neural Network)
+|Title|Author|Conference|Year|Model|
+|-|-|-|-|-|
+|[A Neural Probabilistic Language Model](http://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf)|Yoshua Bengio, Réjean Ducharme, Pascal Vincent, Christian Jauvin|JMLR|2003|Neural Network|
+|[Recurrent Neural Network Regularization](https://arxiv.org/pdf/1409.2329.pdf)|Wojciech Zaremba, Ilya Sutskever, Oriol Vinyals|ICLR|2015|Neural Network|
 **Language model** is the task of predicting what word comes next
 
 More formally: given a sequence of words $w_1, w_2, \cdots, w_n$, we want to compute the probability of the sequence $P(x^{(t+1)}|x^{(1)}, \cdots, x^{(t)}$, where $x^{(t+1)}$ can be any word in the vocabulary $V = \{w_1, \cdots, w_V\}$. 
@@ -430,6 +446,13 @@ $$r_t = \sigma(W_r [h_{t-1}, x_t] + b_r)$$
 where $\odot$ is the element-wise multiplication, $\sigma$ is the sigmoid function, $W_c, W_z, W_r$ are the parameters of the GRU, and $b_c, b_z, b_r$ are the biases of the GRU.
 
 ## 5. Sequence-to-Sequence Models
+|Title|Author|Conference|Year|Date|
+|---|---|---|---|---|
+|[Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215)|Ilya Sutskever, Oriol Vinyals, Quoc V. Le|NIPS|2014|2014-09-10|
+
+Reading materier:
+[Jalammar](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/)
+
 **Neural machine translation** (NMT) is a sequence-to-sequence model. It takes a sequence of words in one language as input and outputs a sequence of words in another language. The neural network architecture is called a sequence-to-sequence model (aka seq2seq) and it involves two **RNNs**. The seq2seq has another famous name: **encoder-decoder**.
 
 NMT is decomposed into **Language model** and **Translation model**. The language model is to learn the structure of objective language grammar. The translation model is to learn the mapping between two languages by paralled corpus.
@@ -468,7 +491,96 @@ $$\text{score}(y_1, \cdots, y_{t-1}, y_t) = \sum_{i=1}^t\log P(y_t|y_1, \cdots, 
 ![seq2seq2](imgs/seq2seq2.png)
 
 The metric of machine translation is **BLEU(Bilingual Evaluation Understudy):**
+The idea is to compare the machine translation with the reference translation. The BLEU score is the geometric mean of the $n$-gram precisions. The $n$-gram precision is the number of $n$-grams in the machine translation that appear in the reference translation, divided by the total number of $n$-grams in the machine translation.
 $$\text{BLEU} = \text{BP} \exp \left(\sum_{n=1}^N w_n \log p_n \right)$$
 where $p_n$ is the precision of $n$-gram, $w_n$ is the weight of $n$-gram, and $\text{BP}$ is the brevity penalty.
 $$\text{BP} = \begin{cases} 1 & \text{if } c > r \\ \exp(1 - r/c) & \text{if } c \leq r \end{cases}$$
 where $c$ is the length of candidate sentence and $r$ is the length of reference sentence.
+
+## 6. Attention Mechanism
+|Title|Author|Conference|Year|Date|
+|---|---|---|---|---|
+|[Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)|Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio|ICLR|2015|2015-09-01|
+RNN and LSTM perform not well in long-term input, we use **attention** to allow flexible access to memory.
+The trouble with seq2seq is that the only information that the decoder receives from the encoder is the last encoder hidden state. It may lead to **catastrophic forgetting**.
+We need to give the decoder a vector representation from every encoder time step so that it can make well-informed translations. That's attention.
+Attention has some advantages:
+1. low parameter complexity
+2. parallelizable (while RNN cannot)
+3. better performance
+4. solves the bottleneck problem
+5. helps with the vanishing gradient problem
+
+Attention treats each word's representation as a **query** to access and incorporate the information from a set of values.
+
+The implementations of an attention layer can be broken down into 4 steps.
+1. Prepare hidden state in encoder $(h_1 \cdots h_t)$ by RNN.
+2. Assuming the current state is $h_t$, we need to calculate the **correlation** between current output decoder state $h_t$ and each input encoder state $h_i$. The score is obtained by a score function (aka alignment function), the score function is commonly dot product between the decoder and encoder hidden states. 
+$$e_t= (a(s_{t-1}, h_1), \cdots, a(s_{t-1}, h_T))$$
+where $a$ is the score function.
+3. Run all the scores through a softmax layer to get a probability distribution over all the encoder hidden states.
+$$\alpha_t = \text{softmax}(e_t)$$
+4. Calculate the context vector $c_t$ by the weighted sum of encoder hidden states.
+$$c_t = \sum_{i=1}^T \alpha_{t,i} h_i$$
+where $T$ is the length of input sequence.
+5. Concatenate the context vector $c_t$ and the decoder hidden state $s_t$ to get the final output.
+$$\tilde{h}_t = \tanh(W_c[c_t; s_t])$$
+where $W_c$ is the weight matrix.
+![attention](imgs/attention.png)
+
+Attention variants:
+Basic dot-product attention:
+$$a(s_{t-1}, h_i) = s_{t-1}^T h_i$$
+Multiplicative attention:
+$$a(s_{t-1}, h_i) = s_{t-1}^T W_a h_i$$
+Additive attention:
+$$a(s_{t-1}, h_i) = v_a^T \tanh(W_a [s_{t-1}; h_i])$$
+where $W_a$ and $v_a$ are weight matrices.
+## 7. Transformer
+|Title|Author|Conference|Year|Date|
+|---|---|---|---|---|
+|[Attention Is All You Need](https://arxiv.org/abs/1706.03762)|Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin|NIPS|2017|2017-06-12|
+
+![transformer](imgs/transformer.png)
+Where, the multi-head attention is a combination of multiple self-attention layers, each head captures different feature in representation space.
+
+The encoder is composed of a stack of 6 identical layers. Each layer has two sub-layers. The first is a **multi-head self-attention mechanism**, and the second is a simple, position-wise **fully connected feed-forward network.**
+![transformer2](imgs/transformer2.png)
+![transformer3](imgs/transformer3.png)
+### 7.1. Self-Attention
+![self-attention](imgs/self-attention.png)
+The self-attention layer is a function of three inputs: **query** ($Q$), **key** ($K$), **value** ($V$). The output is a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.
+$$\text{Attention}(Q, K, V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V$$
+where $d_k$ is the dimension of $K$.
+It means that when we input a sequence, we need to calculate the attention score of current word with all other words in the sequence. At this time, the **current word is the query**, **all the other words are key and value.** The softmax is used to normalize the attention score.
+
+The **feed forward neural network** is a simple two-layer neural network with a ReLU activation in between. It is used to transform the representation of the attention layer.
+$$\text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2$$
+where $W_1 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$, $W_2 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{model}}}$, $b_1 \in \mathbb{R}^{d_{\text{ff}}}$, $b_2 \in \mathbb{R}^{d_{\text{model}}}$.
+### 7.2. Multi-head Attention
+![multi-head](imgs/multi-head.png)
+
+Multi-head attention means we can have different $Q,K,V$ matrices.
+$$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \cdots, \text{head}_h)W^O$$
+where $\text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)$, $W_i^Q \in \mathbb{R}^{d_{\text{model}} \times d_k}$, $W_i^K \in \mathbb{R}^{d_{\text{model}} \times d_k}$, $W_i^V \in \mathbb{R}^{d_{\text{model}} \times d_v}$, $W^O \in \mathbb{R}^{hd_v \times d_{\text{model}}}$.
+
+![multi-head2](imgs/multi-head2.png)
+
+**Masked multi-head attention layer** is used in decoder to prevent the decoder from cheating by looking ahead at the target words when predicting the next word.
+
+**Encoder-Decoder attention layer** is used to allow every position in the decoder to attend over all positions in the input sequence.
+
+### 7.3. Positional Encoding
+The original paper proposed to use sine and cosine functions of different frequencies to encode the **position information**. 
+$$\text{PE}_{(pos, 2i)} = \sin(pos/10000^{2i/d_{\text{model}}})$$
+$$\text{PE}_{(pos, 2i+1)} = \cos(pos/10000^{2i/d_{\text{model}}})$$
+where $pos$ is the position and $i$ is the dimension.
+Here, the function is not good enough, and the position information is not well encoded. The lost position information is very important for sequence model in NLP.
+
+### 7.4. Add & Norm
+Add means **Residual Connection**, it is used to solve the gradient vanishing problem. The core idea is to add the input to the output of the sub-layer. It is a trick to help models train better.
+
+Norm means **Layer Normalization**, it is used to speed up the training process. The core idea is to normalize the output of the sub-layer. It is a trick to help models train faster.
+
+### 7.5. Output Embedding
+The input of output embedding is the **previous output of the decoder**. The output embedding is used to predict the next word. The output embedding is the same as the input embedding.
