@@ -18,7 +18,13 @@ before beginning NLP course, we should study the machine learning.
   - [3. Dependency parsing and Syntactic Structure](#3-dependency-parsing-and-syntactic-structure)
     - [3.1. Constituency Parsing](#31-constituency-parsing)
     - [3.2. Dependency Parsing](#32-dependency-parsing)
-  - [4. RNN(Recurrent Neural Network)](#4-rnnrecurrent-neural-network)
+  - [4. Language model and RNN(Recurrent Neural Network)](#4-language-model-and-rnnrecurrent-neural-network)
+    - [4.1. N-gram Language Models](#41-n-gram-language-models)
+    - [4.2. Recurrent Neural Networks Language Models](#42-recurrent-neural-networks-language-models)
+    - [4.3. Vanishing and Exploding Gradients](#43-vanishing-and-exploding-gradients)
+    - [4.4. Long Short-Term Memory (LSTM)](#44-long-short-term-memory-lstm)
+    - [4.5. Gated Recurrent Unit (GRU)](#45-gated-recurrent-unit-gru)
+  - [5. Sequence-to-Sequence Models](#5-sequence-to-sequence-models)
 
 ## 1. Word Vectors
 | Title | Author | Conference | Date | Model |
@@ -318,4 +324,151 @@ The input is stack, buffer, the set of dependencies, POS tag, arc label.
 More advanced: **Graph-based Dependency Parsing**. It computes a score for every possible dependency for each word. The score is a combination of features of the two words and the relation between them. The score is computed by a neural network.
 ![graph-based dependency parsing](./imgs/parsing3.png)
 
-## 4. RNN(Recurrent Neural Network)
+## 4. Language model and RNN(Recurrent Neural Network)
+**Language model** is the task of predicting what word comes next
+
+More formally: given a sequence of words $w_1, w_2, \cdots, w_n$, we want to compute the probability of the sequence $P(x^{(t+1)}|x^{(1)}, \cdots, x^{(t)}$, where $x^{(t+1)}$ can be any word in the vocabulary $V = \{w_1, \cdots, w_V\}$. 
+
+We can also think of a language model as a system that assigns a probability to a piece of text.
+
+According to the chain rule of probability, we have:
+$$P(x^{(1)}, \cdots, x^{(t)}) = \prod_{i=1}^t P(x^{(i)}|x^{(1)}, \cdots, x^{(i-1)})$$
+
+### 4.1. N-gram Language Models
+**N-gram** is a sequence of N words. For example, "I am a student" is a 4-gram.
+
+An n-gram is a chunk of *n* consecutive words.
+unigrams: I, am, a, student
+bigrams: I am, am a, a student
+trigrams: I am a, am a student
+4-grams: I am a student
+
+Collect statistics about how frequent different n-grams are and use these to predict next word.
+
+**Markov assuption:** the probability of a word only depends on the previous *n-1* words.
+$$P(x^{(t+1)}|x^{(1)}, \cdots, x^{(t)}) = P(x^{(t+1)}|x^{(t-n+2)}, \cdots, x^{(t)})$$
+By counting them in a large corpus, we can estimate the probability of a word given the previous *n-1* words.
+$$P(x^{(t+1)}|x^{(t-n+2)}, \cdots, x^{(t)}) = \frac{C(x^{(t-n+2)}, \cdots, x^{(t+1)})}{C(x^{(t-n+2)}, \cdots, x^{(t)})}$$
+where $C(x^{(t-n+2)}, \cdots, x^{(t+1)})$ is the number of times the sequence $x^{(t-n+2)}, \cdots, x^{(t+1)}$ appears in the corpus, and $C(x^{(t-n+2)}, \cdots, x^{(t)})$ is the number of times the sequence $x^{(t-n+2)}, \cdots, x^{(t)}$ appears in the corpus.
+
+**Storage problem** with n-gram language models: the number of parameters grows exponentially with n. For example, if we have a vocabulary of 100,000 words, and we want to use a 5-gram language model, we need to store $100,000^5 = 10^{20}$ parameters.
+
+**Smoothing** is used to solve the problem of unseen n-grams. We can add a small constant to the numerator and denominator of the equation above. For example, we can add 1 to the numerator and add $|V|$ to the denominator.
+
+**Backoff** is used to solve the problem of unseen n-grams. If we have no data for a 5-gram, we can use a 4-gram. If we have no data for a 4-gram, we can use a 3-gram. If we have no data for a 3-gram, we can use a 2-gram. If we have no data for a 2-gram, we can use a 1-gram.
+
+**Interpolation** is used to solve the problem of unseen n-grams. We can use a weighted average of the probabilities of different n-grams. For example, we can use 0.5\*P(5-gram) + 0.3\*P(4-gram) + 0.2\*P(3-gram).
+
+**Sparsity problem:** the number of n-grams that appear in a corpus is much smaller than the number of possible n-grams. For example, if we have a vocabulary of 100,000 words, and we want to use a 5-gram language model, we need to store $100,000^5 = 10^{20}$ parameters, but the number of 5-grams that appear in a corpus is much smaller than $10^{20}$.
+
+The n-gram language model has a problem that in generating text is that the sentence is surprisingly grammatical but semantically meaningless.
+
+### 4.2. Recurrent Neural Networks Language Models
+fixed-window neural language model improves the n-gram LM (storage problem and sparsity problem) but still have some problems: The fixed window is too small and there is no way to share parameters between different parts of the sentence.
+![n-gram](imgs/ngram.png)
+
+The core idea of **RNN** is applying the same weights $W$ repeatedly.
+![RNN](imgs/rnn.png)
+The hidden state $h_t$ is a function of the previous hidden state $h_{t-1}$ and the current input $x_t$ and the $W$ is shared across all time steps.
+
+The loss functino is cross entropy of the next word:
+$$J(\theta) = -\sum_{t=1}^T \log P(x_t|x_1, \cdots, x_{t-1}; \theta)$$
+where $\theta$ is the parameters of the RNN.
+The metric is perplexity:
+$$PP(x_1, \cdots, x_T) = \sqrt[T]{\frac{1}{P(x_1, \cdots, x_T)}}$$
+The higher, the more perplex.
+
+The advantages and disadvantages of RNN:
+- Advantages: 
+    - The hidden state $h_t$ can capture information from the entire sentence.
+    - The number of parameters is independent of the length of the sentence. Model size doesn't increase
+
+- Disadvantages:
+  - It needs sequential computation, which is slow.
+  - It is hard to capture long-range dependencies. The gradient vanishes or explodes as the number of time steps increases.
+
+![rnn](imgs/rnn2.png)
+
+### 4.3. Vanishing and Exploding Gradients
+RNN has a problem of vanishing and exploding gradients. The gradient of the loss function with respect to the parameters of the RNN is:
+$$\frac{\partial J}{\partial W} = \sum_{t=1}^T \frac{\partial J}{\partial h_t} \frac{\partial h_t}{\partial h_{t-1}} \cdots \frac{\partial h_2}{\partial h_1} \frac{\partial h_1}{\partial W}$$
+where $\frac{\partial J}{\partial h_t}$ is the gradient of the loss function with respect to the hidden state $h_t$.
+If we ignore the activation function, we have:
+$$\frac{\partial h_t}{\partial h_{t-1}} = W$$
+We can observe that when the $W$ is too small or too large or the distance between $i$ and $j$ is too large, the gradient will vanish or explode.
+
+The **vanishing** problems show that the RNN can't capture long-range dependencies.
+
+The **explosion** problems show that the RNN can't train.
+There is a solution to the explosion problem: **gradient clipping**. We can clip the gradient to a maximum value.
+
+### 4.4. Long Short-Term Memory (LSTM)
+LSTM is a special type of RNN that can solve the vanishing and exploding gradients problem. It has a memory cell $c_t$ and three gates: input gate $i_t$, forget gate $f_t$, and output gate $o_t$.
+
+The LSTM formula is:
+$$c_t = f_t \odot c_{t-1} + i_t \odot \tanh(W_c [h_{t-1}, x_t] + b_c)$$
+$$h_t = o_t \odot \tanh(c_t)$$
+$$i_t = \sigma(W_i [h_{t-1}, x_t] + b_i)$$
+$$f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)$$
+$$o_t = \sigma(W_o [h_{t-1}, x_t] + b_o)$$
+where $\odot$ is the element-wise multiplication, $\sigma$ is the sigmoid function, $W_c, W_i, W_f, W_o$ are the parameters of the LSTM, and $b_c, b_i, b_f, b_o$ are the biases of the LSTM.
+
+![lstm](imgs/lstm.png)
+![lstm2](imgs/lstm2.png)
+
+The LSTM architexture makes it easier for the RNN to preserve information over many timesteps.
+The gates are vectors of numbers between 0 and 1. The forget gate $f_t$ controls how much of the previous memory cell $c_{t-1}$ is preserved. The input gate $i_t$ controls how much of the new memory cell $\tanh(W_c [h_{t-1}, x_t] + b_c)$ is added to the memory cell $c_{t-1}$. The output gate $o_t$ controls how much of the memory cell $c_t$ is outputted.
+
+### 4.5. Gated Recurrent Unit (GRU)
+GRU is a special type of RNN that can solve the vanishing and exploding gradients problem. It has a memory cell $c_t$ and two gates: update gate $z_t$ and reset gate $r_t$.
+
+The GRU formula is:
+$$c_t = z_t \odot c_{t-1} + (1 - z_t) \odot \tanh(W_c [r_t \odot h_{t-1}, x_t] + b_c)$$
+$$h_t = c_t$$
+$$z_t = \sigma(W_z [h_{t-1}, x_t] + b_z)$$
+$$r_t = \sigma(W_r [h_{t-1}, x_t] + b_r)$$
+where $\odot$ is the element-wise multiplication, $\sigma$ is the sigmoid function, $W_c, W_z, W_r$ are the parameters of the GRU, and $b_c, b_z, b_r$ are the biases of the GRU.
+
+## 5. Sequence-to-Sequence Models
+**Neural machine translation** (NMT) is a sequence-to-sequence model. It takes a sequence of words in one language as input and outputs a sequence of words in another language. The neural network architecture is called a sequence-to-sequence model (aka seq2seq) and it involves two **RNNs**. The seq2seq has another famous name: **encoder-decoder**.
+
+NMT is decomposed into **Language model** and **Translation model**. The language model is to learn the structure of objective language grammar. The translation model is to learn the mapping between two languages by paralled corpus.
+By Baysian rule, we have:
+$$\arg \max_{e} P(e|f) = \arg \max_{e} P(f|e) P(e)$$
+where $e$ is the objective language and $f$ is the source language.
+
+There is a latent variable $a$ that represents the **alignment** between the source sentence and the objective sentence. We have:
+$$\arg \max_{e} P(e|f) = \arg \max_{e} \sum_a P(f, a|e) P(e)$$
+where $a$ is the alignment between the source sentence and the objective sentence.
+**Alignment** is the correspondence between particular words in the translated sentence pair. Some words have no counterpart.
+
+**Decoding** is to find the best translation:
+$$\hat{e} = \arg \max_{e} P(e|f)$$
+where $e$ is the objective language and $f$ is the source language.
+We use dynamic programming for globally optimal solutions.
+
+![seq2seq](imgs/seq2seq.png)
+The loss function is: $$J = -\sum_{t=1}^T \log P(e_t|e_1, \cdots, e_{t-1}, f)$$
+
+The decoder of training and testing are different. when training, the decoder takes the ground truth as input which is called **teacher forcing**. When testing, the decoder takes the previous output as input which is called **free running**.
+
+A better method of training is to use **scheduled sampling**. It is a compromise between teacher forcing and free running.
+
+The **Greed decoding** has some problems. It can't handle the **repetition** problem and the **rare word** problem. The **Beam search** can solve these problems.
+
+The core idea of Beam search decoding is: On each step of decoder, keep track of the $k$ most likely partial hypotheses. The $k$ is called the **beam size**. The beam size is a hyperparameter.
+
+The algorithm is as follows:
+1. Initialize the beam size $k$.
+2. On each step of decoder, we calculate the scores of all probable output corresponding current input, and choose the highest score of output as next input.
+3. repeat until the end of sentence.
+
+The score function is as follows:
+$$\text{score}(y_1, \cdots, y_{t-1}, y_t) = \sum_{i=1}^t\log P(y_t|y_1, \cdots, y_{i-1},x)$$
+![seq2seq2](imgs/seq2seq2.png)
+
+The metric of machine translation is **BLEU(Bilingual Evaluation Understudy):**
+$$\text{BLEU} = \text{BP} \exp \left(\sum_{n=1}^N w_n \log p_n \right)$$
+where $p_n$ is the precision of $n$-gram, $w_n$ is the weight of $n$-gram, and $\text{BP}$ is the brevity penalty.
+$$\text{BP} = \begin{cases} 1 & \text{if } c > r \\ \exp(1 - r/c) & \text{if } c \leq r \end{cases}$$
+where $c$ is the length of candidate sentence and $r$ is the length of reference sentence.
