@@ -2,6 +2,10 @@
 This is a repo of my machine learning study.
 It includes my learning path, hw and proj of the opencourse, and the conclusive notes of my domain knowledge of ML and DL.
 
+Subfield 
+[Natural Language Processing](https://github.com/Yomikoooo/Machine_Learning/tree/main/NLP)
+[Deep Learning Theory]()
+
 
 - [Machine Learning](#machine-learning)
   - [My Learning Process:](#my-learning-process)
@@ -870,7 +874,24 @@ Then we can prove that:
 $$\text{LN}(\text{MM}_{\alpha W,\alpha b}(z))=\text{LN}(\text{MM}_{W,b}(z))$$
 
 ### 8.5. Batch Normalization (BN)
+We need to make the data i.i.d, **whitening** is an important data preprocessing step. While the independent means that the data is not correlated, the identically distributed means that the data has the same distribution (mean and variance). 
+A typical whitening method is PCA.
 
+**Internal Covariate Shift(ICS)**: The distribution of each layer's input changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities.
+
+This problem results that the input data for each layer is not i.i.d, while a classic assumption of statistic machine learning is the distribution of the source domain and target domain is the same.
+
+The solution is **Normalization**.
+The basin idea is to shift and scale the input vector:
+$$h=f(g\cdot\frac{x-\mu}{\sigma}+b)$$
+where $x$ is the input vector, $\mu$ is the empirical mean of $x$, $\sigma$ is the standard deviation of $x$, $g$ is the scaling factor, $b$ is the bias vector, $f$ is the activation function, $h$ is the output vector.
+In batch normalization, 
+$$\mu =\frac{1}{M}\sum_{i=1}^Mx_i \qquad \sigma^2=\frac{1}{M}\sum_{i=1}^M(x_i-\mu)^2$$
+where $M$ is the batch size.
+
+some properties:
+1. Normalization weight scale invariance.
+2. Normalization data scale invariance.
 
 ### 8.6. Convolutional Layers
 **Description**: Convolutional Neural Networks are NN that consist of convolution layers, usually used in CV and NLP applications. 1-D convolution in the text and 2-D for images.
