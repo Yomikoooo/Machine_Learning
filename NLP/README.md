@@ -32,6 +32,10 @@ before beginning NLP course, we should study the machine learning.
     - [7.3. Positional Encoding](#73-positional-encoding)
     - [7.4. Add \& Norm](#74-add--norm)
     - [7.5. Output Embedding](#75-output-embedding)
+  - [8. Pretraining](#8-pretraining)
+    - [8.1. Byte-pair encoding algorithm](#81-byte-pair-encoding-algorithm)
+  - [8.2. Pretraining through language model](#82-pretraining-through-language-model)
+    - [8.3. BERT](#83-bert)
 
 ## 1. Word Vectors
 | Title | Author | Conference | Date | Model |
@@ -558,6 +562,7 @@ The **feed forward neural network** is a simple two-layer neural network with a 
 $$\text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2$$
 where $W_1 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$, $W_2 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{model}}}$, $b_1 \in \mathbb{R}^{d_{\text{ff}}}$, $b_2 \in \mathbb{R}^{d_{\text{model}}}$.
 ### 7.2. Multi-head Attention
+Multi-head self-attention is computationally efficient.
 ![multi-head](imgs/multi-head.png)
 
 Multi-head attention means we can have different $Q,K,V$ matrices.
@@ -578,9 +583,63 @@ where $pos$ is the position and $i$ is the dimension.
 Here, the function is not good enough, and the position information is not well encoded. The lost position information is very important for sequence model in NLP.
 
 ### 7.4. Add & Norm
-Add means **Residual Connection**, it is used to solve the gradient vanishing problem. The core idea is to add the input to the output of the sub-layer. It is a trick to help models train better.
+Add means **Residual Connection**, it is used to solve the gradient vanishing problem. The core idea is to add the input to the output of the sub-layer. It is a trick to help models train **better**.
+$$X^{(i)}=X^{(i-1)} + \text{SubLayer}(X^{(i-1)})$$
 
 Norm means **Layer Normalization**, it is used to speed up the training process. The core idea is to normalize the output of the sub-layer. It is a trick to help models train faster.
+$$\text{LayerNorm}(X^{(i)}) = \gamma \odot \frac{X^{(i)} - \mu}{\sigma} + \beta$$
+where $\mu$ and $\sigma$ are the mean and standard deviation of $X^{(i)}$, $\gamma$ and $\beta$ are learnable parameters.
 
 ### 7.5. Output Embedding
 The input of output embedding is the **previous output of the decoder**. The output embedding is used to predict the next word. The output embedding is the same as the input embedding.
+
+## 8. Pretraining
+|Title|Author|Conference|Year|Date|
+|---|---|---|---|---|
+|[Semi-supervised Sequence Learning](https://arxiv.org/abs/1511.01432)|Andrew M. Dai, Quoc V. Le|NIPS|2015|2015-11-04|
+|[BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)|Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova|NAACL|2019|2018-10-11|
+
+Many languages exhibit complex **morphlogy**, or word structure. For example, in English, the word "walk" appears in the following forms: "walk", "walked", "walking", "walks". In order to capture such relationships, BERT uses a **WordPiece** embedding.
+
+### 8.1. Byte-pair encoding algorithm
+The dominant modern paradigm is to learn a vocabulary of **parts of words (subword tokens).**
+At training and testing time, each word is split into a sequence of known subwords. 
+
+For example, the word "unaffable" would be split into the subwords "un", "aff", "able". The subwords are then treated just like words, and are assigned their own vector representations.
+
+Replace instances of the character pair with the new subword; repeat until the desired vocabulary size is reached.
+
+## 8.2. Pretraining through language model
+Pretraining start with pretrained word embeddings(no context), and learn how to incorporate context in a Transformer while training on the task.
+
+Some issues to think about:
+the training data we have for our downstream task mush be sufficient to teach all contextual aspects of language. Most of the parameters in out network are randomly initialized.
+
+In modern NLP:
+All (or almost all) parameters in NLP networks are initialized via **pretraining**. Pretraining methods **hide** parts of the input from the model, and train the model to reconstruct those parts.
+
+Pretraining through language modeling:
+- Train a neural network to perform language modeling on a large amount of text.
+- Save the parameters of the network.
+
+**The pretraining and finetuning paradigm:**
+1. Pretraining a model on language modeling with lots of text and learn general things.
+2. Finetuning the pretrained model on a downstream task with a small amount of data and learn task-specific things.
+
+Provides parameters $\hat \theta$ by approximating the pretraining loss $\min \mathcal{L}_{\text{pretrain}}(\theta)$
+Then, finetuning approximates the $\min \mathcal{L}_{\text{fineture}}(\theta)$, starting at $\hat \theta$.
+
+Model pretraining three ways:
+- Encoders
+- Encoder-Decoders
+- Decoders
+
+### 8.3. BERT
+The **encoders** get **bidirectional context** can condition on future, so we can't do language modeling. The idea is to replace some fraction of words in the input with a special token [MASK], and train the model to predict the original value of the masked words, based on the context provided by the other, unmasked words in the sequence. 
+$$\mathcal{L}_{\text{masked}} = \sum_{i=1}^n \log p(x_i \mid x_1, \cdots, x_{i-1}, x_{i+1}, \cdots, x_n)$$
+We call it **Masked LM**.
+Some more details about Masked LM for BERT:
+- 15% of the words in each sequence are replaced with [MASK].
+- 80% of the time, the [MASK] token is replaced with a random word.
+- 10% of the time, the [MASK] token is replaced with the correct word.
+- 10% of the time, the [MASK] token is left unchanged.
