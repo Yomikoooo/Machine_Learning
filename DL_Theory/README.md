@@ -7,7 +7,12 @@
     - [Case of CNN](#case-of-cnn)
     - [Case of RNN and LSTM](#case-of-rnn-and-lstm)
     - [Case of Batch Normalization](#case-of-batch-normalization)
+    - [Dynamical isometry in ResNet](#dynamical-isometry-in-resnet)
   - [Neural Tangent Kernel](#neural-tangent-kernel)
+    - [Mean Field Theory of NTK](#mean-field-theory-of-ntk)
+    - [Catapult mechanism](#catapult-mechanism)
+    - [Initializaion of NTK](#initializaion-of-ntk)
+  - [Implicit Bias](#implicit-bias)
 
 ## Mean-Field Theory
 | Title | Author | Conference | Date |
@@ -102,13 +107,26 @@ While the minimal RNN is possible due to the gating, it can achieve the dynamica
 | Title | Author | Conference | Date |
 | :---- | :----- | :--------- | :--- |
 | [A Mean Field Theory of Batch Normalization](https://arxiv.org/abs/1805.11604) | L. Xiao et al. | ICML 2018 | 2018-05-29 |
+There is a phenomenon that gradient explosion appears in the BN network.
 
+### Dynamical isometry in ResNet
+| Title | Author | Conference | Date |
+| :---- | :----- | :--------- | :--- |
+|[Dynamical Isometry is Achieved in Residual Networks in a Universal Way for any Activation Function](https://arxiv.org/abs/1809.08848)| Tarnowski et al. | NeurIPS 2018 | 2018-09-23 |
+The input-output Jacobian of ResNet is:
+$$\frac{\partial x^L}{\partial x^0}=\prod^L_{l=1}(D^lW^l+I)$$
+where $D^l$ is the diagonal matrix of the activation function. $D^l_{ij}=\phi'(h_i^l)\delta_{ij}$
+Accroding to the derivation, the distribution of singular value is only related to the activation function with a hyperparameter $c$.
+$$G(z)=(zG(z)-1)e^{c(1-2zG(z))}$$
+$$c=\frac{1}{L}\sum_{l=1}^Lc_2^l \qquad c_2^l=\frac{\sigma_w^2}{N}\sum_i^N(\phi'(h^l_i))^2$$
 
 
 ## Neural Tangent Kernel
 | Title | Author | Conference | Date |
 | :---- | :----- | :--------- | :--- |
 | [Neural tangent kernel: Convergence and generalization in neural networks](https://arxiv.org/abs/1806.07572) | J. Jacot et al. | NeurIPS 2018 | 2018-06-19 |
+| [Wide Neural Networks of Any Depth Evolve as Linear Models Under Gradient Descent](https://arxiv.org/abs/1902.06720) | A. S. Jacot et al. | NeurIPS 2018 | 2019-02-18 |
+| [Dynamics of Deep Neural Networks and Neural Tangent Hierarchy](https://arxiv.org/abs/1909.08156) | J. Huang et al. | NeurIPS 2019 | 2019-09-18 |
 
 **Background**: **double descent** curve shows that there is a threshold of model complexity, which indicates that after going over the "U" curve, the over-parameterized model's generalization error will decrease again. This is a phenomenon that is not explained by the traditional bias-variance trade-off theory.
 
@@ -124,4 +142,52 @@ In infinite width limit, the NTK is a deterministic kernel, which means that the
 
 **Theorem 2**: In the training process, the NTK is a **fixed** kernel, which means that the NTK is not affected by the time.
 
-**Theorem 3**: The infinite width neural network is equivalent to a linear model with feature map $\phi(x)$, where $\phi(x)$ is the **neural tangent feature**.
+**Theorem 3**: The infinite width neural network is equivalent to a **linear model** with feature map $\phi(x)$, where $\phi(x)$ is the **neural tangent feature**.
+
+### Mean Field Theory of NTK
+| Title | Author | Conference | Date |
+| :---- | :----- | :--------- | :--- |
+| [Disentangling neural networks from the neural tangent kernel](https://arxiv.org/abs/1912.13053) | L. Xiao et al. | 
+We compute the eigenvalue of NTK in different phases (ordered, chaotic, critical), and do prediction.
+1. compute the maximum and minimum eigenvalue and condition number in large-depth network.
+2. introduce the residual predictor to measure the generalization error.
+
+### Catapult mechanism
+| Title | Author | Conference | Date |
+| :---- | :----- | :--------- | :--- |
+| [The large learning rate phase of deep learning: the catapult mechanism](https://arxiv.org/abs/2003.02218) | A. Lewkowycz et al. |
+
+**Learning rate interval**: The condition of the loss function converges to global minimum by gradient descent is learning rate is smaller than a certain number. In general the number is $2/\lambda_{max}$, where $\lambda_{max}$ is the maximum eigenvalue of the NTK matrix.
+$$f_{t+1}=(1-\eta\lambda_t+\frac{\eta^2f_t^2}{n})f_t$$
+$$\lambda_{t+1}=\lambda_t+\frac{\eta f_t^2}{n}(\eta\lambda_t-4)$$
+
+**Lazy phase**: $\eta<\frac{2}{\lambda_0}$, where $\lambda_0$ is the minimum eigenvalue of the NTK matrix. In this phase, the output converges to $0$ at a speed of exponential. The $\lambda_0$ will not change.
+
+**Catapult phase**: $\frac{2}{\lambda_0}<\eta<\frac{4}{\lambda_0}$ the output will increase first and then decrease to $0$. The $\lambda_t$ decreases slowly because of the the network is wide enough.
+
+**Divergence phase**: both of them will increase and diverge.
+![catapult](imgs/catapult.png)
+The conclusion is that in the catapult phase, the generalization performs well.
+
+### Initializaion of NTK
+| Title | Author | Conference | Date |
+| :---- | :----- | :--------- | :--- |
+| [Width Provably Matters in Optimization for Deep Linear Neural Networks](https://arxiv.org/abs/1901.08572)|
+| [Provable Benefit of Orthogonal Initialization in Optimizing Deep Linear Networks](https://arxiv.org/abs/2001.05992)
+
+We compare the **Gaussian** initializaion and **Orthogonal** initializaion. Gaussian initializaion has the requirement of width of the network, while orthogonal initializaion does not. The orthogonal initializaion is better than Gaussian initializaion in the optimization process.
+
+## Implicit Bias
+| Title | Author | Conference | Date |
+| :---- | :----- | :--------- | :--- |
+| [The Implicit Bias of Gradient Descent on Separable Data](https://arxiv.org/abs/1710.10345)|  
+
+**Background**: **Over-parameterized** model can fit the training dataset at nearly zero error and generalizes well in test dataset. It is contradictory to the traditional bias-variance trade-off theory. We call the assumption **Implicit Bias** and phenomenon **Benign Overfitting**.
+
+2 assumption:
+1. The training dataset is linear separable.
+2. loss funtion is differentiable and monotonically decreasing.
+
+One-layer linear neural network will end up with an SVM maximum margin. Norm of weight will go to infinity.
+
+Deep linear neural network, the $\prod W_i$ as a whole will perform consistently with the one-layer linear neural network. For each layer, weight matrix will tend to be a rand-1 matrix. The neibor weight matrices have alignment.
