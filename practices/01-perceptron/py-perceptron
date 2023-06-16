@@ -1,0 +1,90 @@
+import numpy as np
+class Perceptron:
+    def __init__(self, eta=0.01, n_iter=10,random_state=1):
+        self.eta = eta # learning rate (between 0.0 and 1.0)
+        self.n_iter = n_iter # Passes over the training dataset
+        self.random_state = random_state # Random number generator seed for random weight initialization
+
+    def fit(self, X, y):
+        """Fit training data
+        X: {array-like}, shape = [n_samples, n_features]
+        y: {array-like}, shape = [n_samples]
+        """
+        rgen = np.random.RandomState(self.random_state) # Random number generator
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[1]) # Initialize weights to small random numbers # np.zeros(X.shape[1]) is also OK
+        self.b_ = np.float_(0.) # Initialize bias to 0
+        self.errors_ = [] # Number of misclassifications in every epoch
+
+        for _ in range(self.n_iter):
+            errors = 0
+            for xi, target in zip(X, y): # zip: combine two lists
+                update = self.eta * (target - self.predict(xi))
+                self.w_[1:] += update * xi # Update weights
+                self.w_[0] += update # Update bias
+                errors += int(update != 0.0) # Count misclassifications
+            self.errors_.append(errors)
+        return self
+
+    def net_input(self, X):
+        """Calculate net input"""
+        return np.dot(X, self.w_) + self.b_ # np.dot: matrix multiplication
+
+    def predict(self, X):
+        """Return class label after unit step"""
+        return np.where(self.net_input(X) >= 0.0, 1, 0) # np.where: ternary operator
+    
+class AdalineGD:
+    """ADAptive LInear NEuron classifier.
+    Parameters
+    ----------
+    eta : float
+        Learning rate (between 0.0 and 1.0)
+    n_iter : int
+        Passes over the training dataset
+    random_state : int
+        Random number generator seed for random weight initialization
+    Attributes
+    ----------
+    w_ : 1d-array
+        Weights after fitting
+    b_ : float
+        Bias after fitting
+    cost_ : list
+        Sum-of-squares cost function value averaged over all training samples in each epoch.
+    """
+    def __init__(self, eta=0.01, n_iter=50,random_state=1):
+        self.eta = eta # learning rate (between 0.0 and 1.0)
+        self.n_iter = n_iter # Passes over the training dataset
+        self.random_state = random_state # Random number generator seed for random weight initialization
+
+    def fit(self, X, y):
+        """Fit training data
+        X: {array-like}, shape = [n_samples, n_features]
+        y: {array-like}, shape = [n_samples]
+        """
+        rgen = np.random.RandomState(self.random_state) # Random number generator
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[1]) # Initialize weights to small random numbers # np.zeros(X.shape[1]) is also OK
+        self.b_ = np.float_(0.) # Initialize bias to 0
+        self.cost_ = [] # Number of misclassifications in every epoch
+
+        for _ in range(self.n_iter):
+            net_input = self.net_input(X)
+            output = self.activation(net_input) # activation function
+            errors = (y - output) # errors = (target - predicted)
+            self.w_[1:] += self.eta * X.T.dot(errors) # Update weights
+            self.w_[0] += self.eta * errors.sum() # Update bias
+            cost = (errors**2).sum() / 2.0 # Sum of squared errors
+            self.cost_.append(cost)
+        return self
+
+    def net_input(self, X):
+        """Calculate net input"""
+        return np.dot(X, self.w_) + self.b_ # np.dot: matrix multiplication
+
+    def activation(self, X):
+        """Compute linear activation"""
+        return X # f(x) = x
+
+    def predict(self, X):
+        """Return class label after unit step"""
+        return np.where(self.activation(self.net_input(X)) >= 0.0, 1, 0) # np.where: ternary operator
